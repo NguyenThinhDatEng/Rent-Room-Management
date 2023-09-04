@@ -1,0 +1,16 @@
+.room-category {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-category_feature {
+  display: flex;
+  padding: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content_name {
+  font-weight: 700;
+  font-size: 24px;
+}

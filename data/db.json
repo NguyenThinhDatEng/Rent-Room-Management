@@ -1,0 +1,66 @@
+{
+  "authentication": [
+    {
+      "account": "admin",
+      "password": "asdf"
+    },
+    {
+      "account": "admin",
+      "password": "asdf123"
+    }
+  ],
+
+  "roomCategory": [
+    {
+      "room_category_id": "1",
+      "room_category_name": "Phòng đơn",
+      "unit_price": 1000000
+    },
+    {
+      "room_category_id": "2",
+      "room_category_name": "Phòng đôi",
+      "unit_price": 2000000
+    },
+    {
+      "room_category_id": "3",
+      "room_category_name": "Phòng có ban công",
+      "unit_price": 5000000
+    }
+  ],
+
+  "room": [
+    {
+      "room_id": "1",
+      "room_category_id": "1",
+      "room_name": "Phòng 01",
+      "state": false
+    },
+    {
+      "room_id": "2",
+      "room_category_id": "2",
+      "room_name": "Phòng 02",
+      "state": false
+    },
+    {
+      "room_id": "3",
+      "room_category_id": "3",
+      "room_name": "Phòng 03",
+      "state": true
+    }
+  ],
+
+  "service": [
+    {
+      "service_category_id": "1",
+      "service_category_name": "Điện"
+    },
+    {
+      "service_category_id": "2",
+      "service_category_name": "Nước"
+    },
+    {
+      "service_category_id": "3",
+      "service_category_name": "Internet"
+    }
+  ]
+}
