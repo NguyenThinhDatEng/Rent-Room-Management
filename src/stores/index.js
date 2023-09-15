@@ -1,7 +1,11 @@
 import { createStore } from "vuex";
+// dictionary
 import roomCategoryAPI from "@/apis/dictionary/roomCategoryAPI";
 import roomAPI from "@/apis/dictionary/roomAPI";
 import serviceCategoryAPI from "@/apis/dictionary/serviceCategoryAPI";
+import userAPI from "@/apis/dictionary/userAPI";
+// action
+import rentingAPI from "@/apis/action/rentingAPI";
 
 const store = createStore({
   state() {
@@ -9,6 +13,8 @@ const store = createStore({
       allRoomCategories: [],
       allServiceCategories: [],
       allRooms: [],
+      allRenting: [],
+      allUsers: [],
     };
   },
 
@@ -29,6 +35,14 @@ const store = createStore({
 
     setAllServiceCategories(state, payload) {
       state.allServiceCategories = payload;
+    },
+
+    setAllRenting(state, payload) {
+      state.allRenting = payload;
+    },
+
+    setAllUsers(state, payload) {
+      state.allUsers = payload;
     },
   },
 
@@ -60,6 +74,28 @@ const store = createStore({
         const res = await serviceCategoryAPI.getAsync();
         if (res.data) {
           commit("setAllServiceCategories", res.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async setAllRenting({ commit }) {
+      try {
+        const res = await rentingAPI.getAsync();
+        if (res.data) {
+          commit("setAllRenting", res.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async setAllUsers({ commit }) {
+      try {
+        const res = await userAPI.getAsync();
+        if (res.data) {
+          commit("setAllUsers", res.data);
         }
       } catch (error) {
         console.log(error);

@@ -32,7 +32,9 @@
       {{ Function.formatMoney(content) }}
     </p>
     <!-- Date box -->
-    <p v-else-if="isDate()">{{ moment(content).format("DD/MM/YYYY") }}</p>
+    <p v-else-if="isDate()">
+      {{ content ? moment(content).format("DD/MM/YYYY") : "" }}
+    </p>
     <!-- Boolean -->
     <p v-else-if="isBoolean()">{{ displayBooleanType() }}</p>
     <!-- other -->
@@ -41,13 +43,13 @@
       <div
         class="icon icon--edit"
         :title="title.edit"
-        @click="onClickFeatureButton(Enum.Mode.Update)"
+        @click="clickGridAction(Enum.Mode.Update)"
       ></div>
       <!-- delete button -->
       <div
         class="icon icon--18px icon--delete"
         :title="title.delete"
-        @click="onClickFeatureButton(Enum.Mode.Delete)"
+        @click="clickGridAction(Enum.Mode.Delete)"
       ></div>
     </div>
   </td>
@@ -83,16 +85,16 @@ export default {
       },
     },
   },
-  emits: ["click-checkbox"],
+  emits: ["click-checkbox", "click-grid-action"],
 
   methods: {
     /**
-     * @description xử lý sự kiện ấn vào nút tính năng (using $parent)
+     * @description xử lý sự kiện ấn vào nút tính năng
      * @param {Number} mode chế độ hiển thị popup
-     * @author NVThinh 2/1/2022
+     * @author NVThinh 6.9.2023
      */
-    onClickFeatureButton: function (mode) {
-      this.$parent.carryOutFeature(mode);
+    clickGridAction: function (mode) {
+      this.$emit("click-grid-action", mode);
     },
 
     /**

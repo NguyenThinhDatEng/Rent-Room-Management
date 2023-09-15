@@ -19,7 +19,9 @@
     <div class="menu-item">
       <p @click="showSubMenu(1)">Tác vụ</p>
       <div v-if="menu[1].isShowSubMenu" class="menu-sub-item">
-        <div class="sub-item">Thuê phòng</div>
+        <router-link :to="{ name: i18nLayout.LeftNav.Renting }" class="sub-item"
+          >Thuê phòng</router-link
+        >
         <div class="sub-item">Trả phòng</div>
       </div>
     </div>

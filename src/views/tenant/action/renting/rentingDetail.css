@@ -1,0 +1,15 @@
+@import "@/components/base/input/input.css";
+
+.popup__body__wrapper {
+  padding: 0 16px 16px;
+}
+
+.room-category_price {
+  display: flex;
+  flex-direction: column;
+}
+
+.room-category_price label {
+  margin-bottom: 8px;
+  text-align: left;
+}

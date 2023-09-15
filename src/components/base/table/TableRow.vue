@@ -4,7 +4,7 @@
     :class="{ 'row--active': isActive }"
     @click="handleOnClickRow"
     @keydown.enter="handleOnClickRow"
-    @dblclick="carryOutFeature(Enum.Mode.Update)"
+    @dblclick="clickGridAction(Enum.Mode.Update)"
   >
     <TableData
       v-for="td in tds"
@@ -12,8 +12,9 @@
       :config="td"
       :content="getTdContent(td.col)"
       :isActive="isActive"
-      @click-checkbox="onClickCheckBox = true"
       ref="td"
+      @click-checkbox="onClickCheckBox = true"
+      @click-grid-action="clickGridAction"
     />
   </tr>
 </template>
@@ -73,8 +74,8 @@ export default {
     "update-popup-object",
     "update-voucher",
     "reload-content",
-    "show-popup",
     "click-checkbox",
+    "click-grid-action",
   ],
 
   created() {
@@ -157,13 +158,13 @@ export default {
     },
 
     /**
-     * Sự kiện nhấn vào tính năng chỉnh sửa hoặc nhân bản
-     * @author Nguyen Van Thinh 05/11/2022
+     * @description Sự kiện nhấn vào tính năng của bảng
+     * @author Nguyen Van Thinh 6.9.2023
      */
-    carryOutFeature: function (mode) {
+    clickGridAction: function (mode) {
       try {
         // Gửi dữ liệu lên table
-        this.$emit("show-popup", mode, this.tableRowObj);
+        this.$emit("click-grid-action", mode, this.tableRowObj);
       } catch (error) {
         console.log(error);
       }
@@ -201,36 +202,10 @@ export default {
       }
     },
 
-    // Khởi tạo giá trị hao mòn lũy kế và giá trị còn lại
-    updateRow: function () {
-      try {
-        // Cập nhật giá trị hao mòn năm
-        const depreciation_value = Function.depreciationValue(
-          this.tableRowObj.cost,
-          this.tableRowObj.depreciation_rate
-        );
-        // Cập nhật giá trị hao mòn lũy kế
-        this.accumulated_value = Function.accumulatedValue(
-          depreciation_value,
-          this.tableRowObj.production_date,
-          this.tableRowObj.cost
-        );
-        // Cập nhật giá trị còn lại
-        this.residual_value = this.tableRowObj.cost - this.accumulated_value;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    updateRow: function () {},
 
     // Cập nhật data
-    updateData: function () {
-      try {
-        this.data.accumulated_value = this.accumulated_value;
-        this.data.residual_value = this.residual_value;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    updateData: function () {},
   },
   data() {
     return {
@@ -239,8 +214,6 @@ export default {
       popupMode: 0, // chế độ popup
       isShowPopup: false, // trạng thái ẩn hiện popup
       isShowToast: false, // trạng thái ẩn hiện toast
-      accumulated_value: 0, // tỉ lệ khấu hao
-      residual_value: 0, // giá trị còn lại
       fields: Resource.PopupField, // các trường input trong popup
       onClickCheckBox: false, // true nếu click vào ô checkbox
       // Resources

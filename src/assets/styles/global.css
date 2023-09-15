@@ -1,3 +1,15 @@
+* {
+  box-sizing: border-box;
+  font-family: MISA Regular;
+  font-size: 13px
+}
+
+:root {
+  --input--hover: #1AA4C8;
+  --combobox__first-data: #96C6EE;
+  --combobox__data: #C7E0F4;
+}
+
 body {
   margin: 0;
 }
@@ -15,4 +27,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.flex {
+  display: flex;
+  flex: 1
 }

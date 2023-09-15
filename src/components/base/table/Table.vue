@@ -44,7 +44,7 @@
           @update-row="updateRow"
           @update-voucher="updateVoucher"
           @update-checked-header="updateCheckedHeader"
-          @show-popup="showPopup"
+          @click-grid-action="clickGridAction"
           ref="tableRow"
         ></Row>
         <tr class="ignoreRow">
@@ -71,7 +71,6 @@ import Row from "./TableRow.vue";
 import TableFoot from "./TableFoot.vue";
 // Resources
 import Resource from "@/commons/resource";
-import Function from "@/commons/commonFunction";
 import TableResource from "@/commons/resource/tableResource";
 
 export default {
@@ -136,7 +135,12 @@ export default {
     }, // Vị trí bắt đầu của
   },
   components: { Row, TableFoot },
-  emits: ["update-row", "reload-content", "show-popup", "update-voucher"],
+  emits: [
+    "update-row",
+    "reload-content",
+    "click-grid-action",
+    "update-voucher",
+  ],
 
   watch: {
     // Trạng thái chọn tất cả thay đổi
@@ -208,12 +212,12 @@ export default {
     /**
      * Hiển thị popup khi thực hiện chức năng
      * @param {Number} mode chế độ popup
-     * @param {Object} popupObj đối tượng tài sản trong popup
-     * @author NVThinh 19/11/2022
+     * @param {Object} entity
+     * @author NVThinh 6.9.2023
      */
-    showPopup: function (mode, popupObj) {
+    clickGridAction: function (mode, entity) {
       try {
-        this.$emit("show-popup", mode, popupObj);
+        this.$emit("click-grid-action", mode, entity);
       } catch (error) {
         console.log(error);
       }
@@ -323,22 +327,6 @@ export default {
           this.footerData.totalOfCost = this.data.reduce((accumulator, obj) => {
             return accumulator + obj.cost;
           }, 0);
-          this.footerData.totalDepreciationValue = this.data.reduce(
-            (accumulator, obj) => {
-              return (
-                accumulator +
-                Function.accumulatedValue(
-                  (obj.depreciation_rate * obj.cost) / 100,
-                  obj.production_date,
-                  obj.cost
-                )
-              );
-            },
-            0
-          );
-          this.footerData.totalResidualValue =
-            this.footerData.totalOfCost -
-            this.footerData.totalDepreciationValue;
         }
         // Ẩn Loader
         this.isShowLoader = false;

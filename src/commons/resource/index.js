@@ -137,20 +137,7 @@ export default {
   },
   // Nhãn các ô input trong popup
   PopupLabel: {
-    fixed_asset_code: "Mã tài sản",
-    fixed_asset_name: "Tên tài sản",
-    department_code: "Mã bộ phận sử dụng",
-    department_name: "Tên bộ phận sử dụng",
-    fixed_asset_category_code: "Mã loại tài sản",
-    fixed_asset_category_name: "Tên loại tài sản",
-    quantity: "Số lượng",
-    cost: "Nguyên giá",
-    life_time: "Số năm sử dụng",
-    depreciation_rate: "Tỉ lệ hao mòn (%)",
-    depreciation_value: "Giá trị hao mòn năm",
-    tracked_year: "Năm theo dõi",
-    purchase_date: "Ngày mua",
-    production_date: "Ngày bắt đầu sử dụng",
+    room_category_name: "Tên loại phòng",
   },
   // Độ dài ký tự có thể nhập trong ô input
   InputLength: {
@@ -159,10 +146,6 @@ export default {
     department: 255,
     fixed_asset_category: 255,
     depreciation_rate: 5,
-  },
-  // Nội dung dòng đầu tiên trong combobox detail
-  ComboboxInfo: {
-    firstCol: "Mã",
   },
   // Mô tả chức năng button
   ButtonContent: {

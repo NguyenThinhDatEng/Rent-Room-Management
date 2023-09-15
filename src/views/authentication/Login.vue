@@ -1,35 +1,37 @@
 <template>
-  <div class="background"></div>
-  <div class="container" id="content">
-    <form @submit.prevent="onSubmit">
-      <h2 class="mb-3">Đăng nhập</h2>
-      <div class="input">
-        <label for="email">Tài khoản *</label>
-        <input
-          class="form-control"
-          type="text"
-          name="email"
-          placeholder="admin"
-          v-model="userInfo.account"
-        />
-      </div>
-      <div class="input">
-        <label for="password">Mật khẩu *</label>
-        <input
-          class="form-control"
-          type="password"
-          name="password"
-          placeholder="123"
-          v-model="userInfo.password"
-        />
-      </div>
-      <!-- <div class="alternative-option mt-4">
-        You don't have an account? <span @click="moveToRegister">Register</span>
-      </div> -->
-      <button type="submit" class="mt-4 btn-pers" id="login_button">
-        Login
-      </button>
-    </form>
+  <div class="login-container">
+    <div class="background"></div>
+    <div class="container" id="content">
+      <form @submit.prevent="onSubmit">
+        <h2 class="mb-3">Đăng nhập</h2>
+        <div class="input">
+          <label for="email">Tài khoản *</label>
+          <input
+            class="form-control"
+            type="text"
+            name="email"
+            placeholder="admin"
+            v-model="userInfo.account"
+          />
+        </div>
+        <div class="input">
+          <label for="password">Mật khẩu *</label>
+          <input
+            class="form-control"
+            type="password"
+            name="password"
+            placeholder="123"
+            v-model="userInfo.password"
+          />
+        </div>
+        <!-- <div class="alternative-option mt-4">
+          You don't have an account? <span @click="moveToRegister">Register</span>
+        </div> -->
+        <button type="submit" class="mt-4 btn-pers" id="login_button">
+          Login
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 

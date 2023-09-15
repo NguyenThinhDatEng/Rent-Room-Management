@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 // components
 import Main from "@/components/layout/main/Main.vue";
-import RoomCategory from "@/views/tenant/dictionary/RoomCategory";
-import Room from "@/views/tenant/dictionary/Room.vue";
-import ServiceCategory from "@/views/tenant/dictionary/ServiceCategory.vue";
+// dictionary
+import RoomCategory from "@/views/tenant/dictionary/roomCategory/RoomCategory.vue";
+import Room from "@/views/tenant/dictionary/room/Room.vue";
+import ServiceCategory from "@/views/tenant/dictionary/serviceCategory/ServiceCategory.vue";
+// action
+import Renting from "@/views/tenant/action/renting/Renting.vue";
+// others
 import LoginVue from "@/views/authentication/Login.vue";
 import NotFound from "@/pages/NotFound.vue";
 import RouterTest from "@/views/test/Router.vue";
@@ -30,6 +34,11 @@ const routes = [
         path: i18nLayout.LeftNav.Service,
         name: i18nLayout.LeftNav.Service,
         component: ServiceCategory,
+      },
+      {
+        path: i18nLayout.LeftNav.Renting,
+        name: i18nLayout.LeftNav.Renting,
+        component: Renting,
       },
     ],
   },

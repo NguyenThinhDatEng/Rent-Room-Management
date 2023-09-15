@@ -13,7 +13,6 @@
     flex-direction: column;
     border-radius: 4px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
-    width: 864px;
     background-color: #fff;
 }
 
@@ -25,7 +24,7 @@
 
 .popup__header span {
     font-family: MISA Bold;
-    font-size: 17px;
+    font-size: 20px;
 }
 
 .popup__header button {

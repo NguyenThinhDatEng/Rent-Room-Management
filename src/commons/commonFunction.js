@@ -35,28 +35,6 @@ export default {
     }
   },
 
-  // Tính hao mòn lũy kế
-  accumulatedValue: function (depreciation_value, production_date, cost) {
-    try {
-      if (!production_date) return 0;
-      const production_year = Number(production_date.slice(0, 4));
-      const numberOfUsedYear = Math.abs(
-        this.getCurrentYear() - production_year
-      );
-      let result = numberOfUsedYear * depreciation_value;
-      // Nếu hao mòn lũy kế lớn hơn nguyên giá
-      if (result > cost) return cost;
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
-  // Tính hao mòn năm
-  depreciationValue: function (cost, depreciation_rate) {
-    return (cost * depreciation_rate) / 100;
-  },
-
   // So sánh 2 đối tượng
   isObjectEqual: function (object1, object2) {
     const keys1 = Object.keys(object1);
@@ -119,5 +97,27 @@ export default {
     } catch (error) {
       console.log(error);
     }
+  },
+
+  /**
+   * generate uuid
+   * @returns {String} new id
+   * @author nvthinh 6.9.2023
+   */
+  uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+      (
+        c ^
+        (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+      ).toString(16)
+    );
+  },
+
+  /**
+   * @returns {String}
+   * @author nvthinh 6.9.2023
+   */
+  removeSpecialCharacters(str) {
+    return str.replace(/[^0-9]/g, "");
   },
 };
