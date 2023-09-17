@@ -39,7 +39,24 @@
       :disabled="isDisabled"
       :placeholder="getPlaceholder()"
     />
-    <!-- input -->
+    <!-- Phone -->
+    <input
+      v-else-if="mask == 'phone'"
+      v-mask-phone.br
+      :id="inputId"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      :class="[
+        'input',
+        { 'input--disabled': isDisabled },
+        { 'input--error': isError },
+      ]"
+      :maxlength="maxLength"
+      :field="field"
+      :disabled="isDisabled"
+      :placeholder="getPlaceholder()"
+    />
+    <!-- Normal input -->
     <input
       v-else
       :id="inputId"
@@ -124,7 +141,7 @@ export default {
       type: String,
       default: "",
       validator: function (value) {
-        return ["decimal", "date"].includes(value) || value == "";
+        return ["decimal", "date", "phone"].includes(value) || value == "";
       },
     },
     /**

@@ -1,7 +1,12 @@
 <template>
-  <Popup :title="popupTitle" @close-popup="close" @on-save="save">
+  <Popup
+    class="renting-detail"
+    :title="popupTitle"
+    @close-popup="close"
+    @on-save="save"
+  >
     <div class="popup__body__wrapper">
-      <div class="row room-category_name">
+      <div class="row flex-column">
         <ComboboxDetail
           label="Phòng"
           field="room"
@@ -16,7 +21,7 @@
           @update-combobox="updateCombobox"
         ></ComboboxDetail>
       </div>
-      <div class="row">
+      <div class="row user">
         <ComboboxDetail
           label="Người thuê"
           field="user"
@@ -30,6 +35,9 @@
           :isShowComboboxDataTitle="false"
           @update-combobox="updateCombobox"
         ></ComboboxDetail>
+        <button class="add-user" @click="showUserDetail">
+          <div class="icon icon--plus-black w-10 h-10 center"></div>
+        </button>
       </div>
       <div class="row">
         <Input
@@ -40,6 +48,7 @@
           mask="decimal"
           :max-length="22"
           v-model="model.deposit"
+          class="mr-2"
         ></Input>
         <Input
           label="Ngày thuê"
@@ -97,6 +106,7 @@ export default {
       type: Number,
     },
   },
+  emits: ["show-user-detail"],
   setup(props) {
     const rentingDetail = useRentingDetail(props);
     return rentingDetail;
@@ -104,22 +114,6 @@ export default {
 };
 </script>
     
-<style scoped>
-@import "./rentingDetail.css";
-
-.row {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-#state {
-  margin-right: 8px;
-}
-
-.state {
-  justify-content: center;
-  align-items: center;
-}
-</style>@/views/base/BaseDetail.js
+<style lang="scss">
+@import "./rentingDetail.scss";
+</style>

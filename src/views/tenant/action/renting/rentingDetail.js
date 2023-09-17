@@ -46,6 +46,15 @@ export const useRentingDetail = (props) => {
     }
   };
 
+  /**
+   * @description Hiển thị popup thêm mới người dùng
+   * @author nvthinh 18.9.2023
+   */
+  const showUserDetail = () => {
+    const me = proxy;
+    me.$emit("show-user-detail");
+  };
+
   onMounted(() => {
     const me = proxy;
     // update model
@@ -66,5 +75,7 @@ export const useRentingDetail = (props) => {
     key,
     userNotRenting,
     dispatchList,
+    showUserDetail,
+    Enum,
   };
 };

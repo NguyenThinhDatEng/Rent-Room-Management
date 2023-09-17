@@ -1,15 +1,11 @@
+import { getCurrentInstance, ref } from "vue";
 // Resources
 import TableResource from "@/commons/resource/tableResource";
 import Enum from "@/commons/enum";
 import Resource from "@/commons/resource";
 
 export const useRenting = () => {
-  // config to base
-  const itemsName = "allRenting";
-  const dispatchList = ["setAllRenting", "setAllRooms", "setAllUsers"];
-  const controllerName = "Rentings";
-  // key
-  const key = "renting_id";
+  const { proxy } = getCurrentInstance();
 
   const cols = {
     numerical_order: { ENG: "numerical_order", VN: "STT" },
@@ -77,14 +73,32 @@ export const useRenting = () => {
     },
   ];
 
+  const isShowUserDetail = ref(false);
+  const toggleIsUserDetail = () => {
+    isShowUserDetail.value = !isShowUserDetail.value;
+  };
+
+  /**
+   * @override
+   * @author nvthinh 17.9.2023
+   */
+  const initConfig = () => {
+    const me = proxy;
+    // init
+    me.key = "renting_id";
+    me.controllerName = "Rentings";
+    me.itemsName = "allRenting";
+    me.dispatchList = ["setAllRenting", "setAllRooms", "setAllUsers"];
+  };
+
   return {
-    itemsName,
-    dispatchList,
-    controllerName,
-    key,
     cols,
-    TableResource,
     tds,
+    TableResource,
     Resource,
+    Enum,
+    isShowUserDetail,
+    toggleIsUserDetail,
+    initConfig,
   };
 };

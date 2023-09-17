@@ -15,13 +15,14 @@ export default {
   data() {
     return {
       key: "",
+      name: "",
       mode: 0,
       model: {},
-      name: "",
+      defaultData: {},
       isShowPopup: false,
       dispatchList: [],
       itemsName: "",
-      controllerName: "Rooms",
+      controllerName: "",
     };
   },
   computed: {
@@ -46,6 +47,8 @@ export default {
   },
   emits: ["close"],
   created() {
+    this.initConfig();
+
     this.dispatchList.forEach((action) => {
       this.store.dispatch(action);
     });
@@ -53,7 +56,16 @@ export default {
   mounted() {
     window._detail = this;
   },
+
+  unmounted() {},
+
   methods: {
+    /**
+     * @description Khởi tạo cấu hình cho detail
+     * @author nvthinh 17.9.2023
+     */
+    initConfig() {},
+
     async save() {
       const me = this;
 
@@ -101,7 +113,9 @@ export default {
      * @author nvthinh 15.9.2023
      */
     close() {
-      this.$emit("close");
+      const me = this;
+      // emit sự kiện
+      me.$emit("close");
     },
   },
 };

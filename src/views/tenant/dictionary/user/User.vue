@@ -17,9 +17,9 @@
       :tds="tds"
       @clickGridAction="clickGridAction"
     ></table-vue>
-    <RoomDetail
+    <UserDetail
       v-if="isShowPopup"
-      title="phòng"
+      title="người thuê"
       :width="500"
       :entity="detailData"
       :popupMode="popupMode"
@@ -32,7 +32,7 @@
 // components
 import TableVue from "@/components/base/table/Table.vue";
 import ButtonIcon from "@/components/base/button/ButtonIcon.vue";
-import RoomDetail from "./UserDetail.vue";
+import UserDetail from "./UserDetail.vue";
 // resources
 import { useUser } from "./user";
 // base
@@ -44,7 +44,7 @@ export default {
   components: {
     TableVue,
     ButtonIcon,
-    RoomDetail,
+    UserDetail,
   },
   setup() {
     const user = useUser();

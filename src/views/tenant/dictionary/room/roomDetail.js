@@ -50,7 +50,7 @@ export const useRoomDetail = (props) => {
 
   /**
    * @description Cập nhật dữ liệu khi combobox thay đổi
-   * @author NVThinh 08/09/2023
+   * @author NVThinh 08.09.2023
    */
   const updateCombobox = (data) => {
     const me = proxy;

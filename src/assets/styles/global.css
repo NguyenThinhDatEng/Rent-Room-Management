@@ -33,3 +33,20 @@ body {
   display: flex;
   flex: 1
 }
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.w-16 {
+  width: 16px;
+}
+
+.h-16 {
+  height: 16px;
+}
+
+.mr-2 {
+  margin-right: 16px;
+}

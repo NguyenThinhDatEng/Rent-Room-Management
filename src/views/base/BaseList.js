@@ -13,12 +13,13 @@ export default {
     return {
       key: "",
       name: "",
-      isShowPopup: false,
       detailData: {},
+      isShowPopup: false,
       popupMode: 0,
+      controllerName: "",
       dispatchList: [],
       itemsName: "",
-      controllerName: "Rooms",
+      defaultDetailData: {},
     };
   },
   computed: {
@@ -40,17 +41,36 @@ export default {
     },
   },
   created() {
-    this.dispatchList.forEach((action) => {
-      this.store.dispatch(action);
+    const me = this;
+
+    me.initConfig();
+
+    me.dispatchList.forEach((action) => {
+      me.store.dispatch(action);
     });
   },
   mounted() {
     window._list = this;
   },
   methods: {
+    /**
+     * @description Khởi tạo cấu hình cho list
+     * @author nvthinh 17.9.2023
+     */
+    initConfig() {},
+
+    /**
+     * @description Xử lý sự kiện ấn vào nút thêm mới
+     * @author nvthinh 17.9.2023
+     */
     add() {
-      this.popupMode = Enum.Mode.Add;
-      this.showPopup();
+      const me = this;
+      // Cập nhật dữ liệu cho detail
+      me.detailData = me.defaultDetailData;
+      // Cập nhật mode popup
+      me.popupMode = Enum.Mode.Add;
+      // Hiển thị
+      me.showPopup();
     },
 
     async clickGridAction(mode, entity) {

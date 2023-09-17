@@ -1,14 +1,11 @@
+import { getCurrentInstance } from "vue";
 // Resources
 import TableResource from "@/commons/resource/tableResource";
 import Enum from "@/commons/enum";
 import Resource from "@/commons/resource";
 
 export const useUser = () => {
-  // config to base
-  const itemsName = "allUsers";
-  const dispatchList = ["setAllUsers"];
-  // key
-  const key = "user_id";
+  const { proxy } = getCurrentInstance();
 
   const cols = {
     numerical_order: { ENG: "numerical_order", VN: "STT" },
@@ -69,14 +66,29 @@ export const useUser = () => {
     },
   ];
 
+  /**
+   * @override
+   * @author nvthinh 17.9.2023
+   */
+  const initConfig = () => {
+    const me = proxy;
+    // init
+    me.key = "user_id";
+    me.itemsName = "allUsers";
+    me.dispatchList = ["setAllUsers"];
+    me.defaultDetailData = {
+      user_id: "",
+      user_name: "",
+      gender: 1,
+      phone_number: "",
+      identifier_number: "",
+    };
+  };
+
   return {
-    itemsName,
-    cols,
-    TableResource,
     tds,
+    cols,
+    initConfig,
     Resource,
-    close,
-    dispatchList,
-    key,
   };
 };
