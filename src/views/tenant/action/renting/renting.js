@@ -14,7 +14,7 @@ export const useRenting = () => {
   const cols = {
     numerical_order: { ENG: "numerical_order", VN: "STT" },
     room_name: { ENG: "room_name", VN: "Tên phòng" },
-    fullname: { ENG: "fullname", VN: "Người thuê" },
+    user_name: { ENG: "user_name", VN: "Người thuê" },
     phone_number: { ENG: "renter_name", VN: "Số điện thoại" },
     identifier_number: { ENG: "identifier_number", VN: "CMND/CCCD" },
     room_rental_date: { ENG: "room_rental_date", VN: "Ngày thuê" },
@@ -38,7 +38,7 @@ export const useRenting = () => {
       align: "left",
     },
     {
-      col: "fullname",
+      col: "user_name",
       type: Enum.TableData.type.text,
       minWidth: "90px",
       maxWidth: "180px",

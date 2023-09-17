@@ -57,6 +57,9 @@ export default {
       if (!me.validateRequire()) {
         return;
       }
+
+      me.beforeSave();
+
       try {
         let res = null;
         let payload = {
@@ -83,6 +86,12 @@ export default {
         me.close();
       }
     },
+
+    validateRequire() {
+      return true;
+    },
+
+    beforeSave() {},
 
     /**
      * @description Đóng popup

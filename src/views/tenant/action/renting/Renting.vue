@@ -23,6 +23,7 @@
       :width="400"
       :entity="detailData"
       :mode="popupMode"
+      @close="closePopup"
     />
   </div>
 </template>

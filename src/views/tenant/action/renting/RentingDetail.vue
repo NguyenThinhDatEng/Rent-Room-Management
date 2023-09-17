@@ -1,5 +1,5 @@
 <template>
-  <Popup :title="popupTitle" @close-popup="close" @on-save="add">
+  <Popup :title="popupTitle" @close-popup="close" @on-save="save">
     <div class="popup__body__wrapper">
       <div class="row room-category_name">
         <ComboboxDetail
@@ -8,7 +8,7 @@
           displayField="room_name"
           valueField="room_id"
           :max-length="255"
-          :combobox-data="rooms"
+          :combobox-data="store.state.allRooms"
           :value="model.room_id"
           :has-label="true"
           :is-required="true"
@@ -23,8 +23,8 @@
           displayField="user_name"
           valueField="user_id"
           :max-length="255"
-          :combobox-data="store.allUsers"
-          :value="model.room_id"
+          :combobox-data="userNotRenting"
+          :value="model.user_id"
           :has-label="true"
           :is-required="true"
           :isShowComboboxDataTitle="false"

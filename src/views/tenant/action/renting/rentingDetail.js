@@ -1,62 +1,20 @@
-import { getCurrentInstance, onMounted, reactive, computed } from "vue";
-// api
-import roomAPI from "@/apis/dictionary/roomAPI";
+import { getCurrentInstance, onMounted, computed } from "vue";
 // Resources
 import Enum from "@/commons/enum";
+// resources
 import fn from "@/commons/commonFunction";
 
 export const useRentingDetail = (props) => {
   const { proxy } = getCurrentInstance();
   // cofig to base
   const controllerName = "Rentings";
-  // Dữ liệu combobox
-  const rooms = computed(() => {
-    return proxy.store.state.allRooms.filter((item) => {
-      return item.state == true;
-    });
-  });
+  const dispatchList = ["setAllRenting"];
   // key
   const key = "renting_id";
-
-  const add = async () => {
-    const me = proxy;
-
-    if (!validateRequire()) {
-      return;
-    }
-    try {
-      let res = null;
-      let payload = {
-        ...model,
-      };
-      payload[key] = fn.uuidv4();
-      // call api
-      if (props.mode == Enum.Mode.Add) {
-        res = await roomAPI.postAsync(payload);
-        // update store
-        if (res.data) {
-          me.store.dispatch("setAllRenting");
-        }
-      } else {
-        res = await roomAPI.putAsync(model);
-        // update store
-        if (res.data) {
-          me.store.dispatch("setAllRenting");
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      this.close();
-    }
-  };
-
-  const validateRequire = () => {
-    if (model.service_category_name == "") {
-      return false;
-    }
-    return true;
-  };
+  // filter users
+  const userNotRenting = computed(() => {
+    return proxy.store.state.allUsers.filter((item) => item.is_renting == 0);
+  });
 
   const popupTitle = computed(() => {
     if (proxy.$props.mode == Enum.Mode.Update) {
@@ -71,28 +29,42 @@ export const useRentingDetail = (props) => {
    * @author NVThinh 08/09/2023
    */
   const updateCombobox = (data) => {
+    const me = proxy;
     data.forEach((element) => {
-      model[element.field] = element.value;
+      me.model[element.field] = element.value;
     });
   };
 
-  // data
-  const model = reactive({});
+  const beforeSave = () => {
+    const me = proxy;
+    // convert string to Date
+    me.model.room_rental_date = new Date(me.model.room_rental_date);
+    // Cập nhật số tiền cọc
+    if (typeof me.model.deposit === "string") {
+      const tmp = fn.removeSpecialCharacters(me.model.deposit);
+      me.model.deposit = Number(tmp);
+    }
+  };
+
   onMounted(() => {
     const me = proxy;
     // update model
-    model[key] = props.entity[key];
+    me.model[key] = props.entity[key];
     // room
-    model.room_id = rooms.value[0]?.room_id;
-    model.room_name = rooms.value[0]?.room_name;
-    // init room category for model
-    model.room_category_id =
-      me.store.state.allRoomCategories[0]?.room_category_id;
-    model.room_category_name =
-      me.store.state.allRoomCategories[0]?.room_category_name;
-    // update trạng thái
-    model.state = true;
+    me.model.room_id = me.store.state.allRooms[0]?.room_id;
+    me.model.room_name = me.store.state.allRooms[0]?.room_name;
+    // user
+    me.model.user_id = userNotRenting.value[0]?.user_id;
+    me.model.user_name = userNotRenting.value[0]?.user_name;
   });
 
-  return { add, model, popupTitle, rooms, updateCombobox, controllerName };
+  return {
+    popupTitle,
+    updateCombobox,
+    controllerName,
+    beforeSave,
+    key,
+    userNotRenting,
+    dispatchList,
+  };
 };
