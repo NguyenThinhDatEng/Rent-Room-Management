@@ -60,6 +60,13 @@ export default {
       checkbox: 2, // nhận checkbox
       date: 3, // nhận dữ liệu thời gian
       boolean: 4, // Kiểu true/false
+      enum: 5,
     },
+  },
+  // Giới tính
+  Gender: {
+    Other: 0,
+    Male: 1,
+    Female: 2,
   },
 };

@@ -1,8 +1,20 @@
 export default {
   LeftNav: {
-    RoomCategory: "room-category",
-    Room: "room",
-    Service: "service",
-    Renting: "renting",
+    Menu: {
+      Dictionary: "dictionary",
+      Action: "action",
+      Statistic: "statistic",
+    },
+
+    Dictionary: {
+      RoomCategory: "room-category",
+      Room: "room",
+      Service: "service",
+      User: "user",
+    },
+
+    Action: {
+      Renting: "renting",
+    },
   },
 };

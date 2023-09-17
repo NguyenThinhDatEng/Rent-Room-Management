@@ -1,69 +1,131 @@
 <template>
   <div class="left-nav-content">
-    <div class="menu-item">
-      <p @click="showSubMenu(0)">Danh mục</p>
-      <div v-if="menu[0].isShowSubMenu" class="menu-sub-item">
+    <div class="menu-item" v-for="(item, index) in menu" :key="item.id">
+      <p @click="showSubMenu(index)">{{ item.name }}</p>
+      <div v-if="item.isShowSubMenu" class="menu-sub-item">
         <router-link
-          :to="{ name: i18nLayout.LeftNav.RoomCategory }"
+          v-for="subItem in item.subMenu"
+          :key="subItem.name"
+          :to="subItem.linkTo"
           class="sub-item"
-          >Loại phòng</router-link
+          >{{ subItem.name }}</router-link
         >
-        <router-link :to="{ name: i18nLayout.LeftNav.Room }" class="sub-item"
-          >Phòng</router-link
-        >
-        <router-link :to="{ name: i18nLayout.LeftNav.Service }" class="sub-item"
-          >Dịch vụ</router-link
-        >
-      </div>
-    </div>
-    <div class="menu-item">
-      <p @click="showSubMenu(1)">Tác vụ</p>
-      <div v-if="menu[1].isShowSubMenu" class="menu-sub-item">
-        <router-link :to="{ name: i18nLayout.LeftNav.Renting }" class="sub-item"
-          >Thuê phòng</router-link
-        >
-        <div class="sub-item">Trả phòng</div>
-      </div>
-    </div>
-    <div class="menu-item">
-      <p @click="showSubMenu(2)">Thống kê</p>
-      <div v-if="menu[2].isShowSubMenu" class="menu-sub-item">
-        <div class="sub-item">Phòng đang thuê</div>
-        <div class="sub-item">Phòng trống</div>
-        <div class="sub-item">Tiền điện</div>
-        <div class="sub-item">Tiền nước</div>
-        <div class="sub-item">Doanh thu</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { reactive } from "vue";
+import { getCurrentInstance, onMounted, reactive } from "vue";
 // Resources
 import i18nLayout from "@/i18n/components/i18nLayout";
 
 export default {
   name: "LeftNav",
   setup() {
+    const { proxy } = getCurrentInstance();
+
     const menu = reactive([
       {
+        path: "dictionary",
+        name: "Danh mục",
         isShowSubMenu: false,
+        subMenu: [
+          {
+            name: "Loại phòng",
+            linkTo: { name: i18nLayout.LeftNav.Dictionary.RoomCategory },
+          },
+          {
+            name: "Phòng",
+            linkTo: { name: i18nLayout.LeftNav.Dictionary.Room },
+          },
+          {
+            name: "Dịch vụ",
+            linkTo: { name: i18nLayout.LeftNav.Dictionary.Service },
+          },
+          {
+            name: "Người thuê",
+            linkTo: { name: i18nLayout.LeftNav.Dictionary.User },
+          },
+        ],
       },
       {
+        path: "action",
+        name: "Tác vụ",
         isShowSubMenu: false,
+        subMenu: [
+          {
+            name: "Thuê phòng",
+            linkTo: { name: i18nLayout.LeftNav.Action.Renting },
+          },
+          {
+            name: "Trả phòng",
+            linkTo: { name: i18nLayout.LeftNav.Room },
+          },
+        ],
       },
       {
+        path: "statistic",
+        name: "Thống kê",
         isShowSubMenu: false,
+        subMenu: [
+          {
+            name: "Phòng đang thuê",
+            linkTo: { name: i18nLayout.LeftNav.Renting },
+          },
+          {
+            name: "Phòng trống",
+            linkTo: { name: i18nLayout.LeftNav.Renting },
+          },
+          {
+            name: "Tiền điện",
+            linkTo: { name: i18nLayout.LeftNav.Renting },
+          },
+          {
+            name: "Tiền nước",
+            linkTo: { name: i18nLayout.LeftNav.Renting },
+          },
+          {
+            name: "Doanh thu",
+            linkTo: { name: i18nLayout.LeftNav.Renting },
+          },
+        ],
       },
     ]);
 
+    /**
+     * @description Hiển thị sub menu
+     * @param {Number} index
+     * @author nvthinh 17.9.2023
+     */
     const showSubMenu = (index) => {
+      const me = proxy;
+      // Cập nhật ẩn hiện sub menu cho toàn bộ menu
       menu.forEach((item, i) => {
         if (i === index) {
           item.isShowSubMenu = !item.isShowSubMenu;
         } else {
           item.isShowSubMenu = false;
+        }
+      });
+      // Cập nhật router
+      me.$router.push({ name: menu[index].path });
+    };
+
+    onMounted(() => {
+      reload();
+    });
+
+    const reload = () => {
+      const me = proxy;
+      // Cập nhật show sub menu
+      const routePath = me.$route.path;
+      const itemPaths = menu.map((item) => item.path);
+      itemPaths.some((path) => {
+        if (routePath.includes(path)) {
+          const index = menu.findIndex((item) => item.path == path);
+          menu[index].isShowSubMenu = true;
+          return true;
         }
       });
     };

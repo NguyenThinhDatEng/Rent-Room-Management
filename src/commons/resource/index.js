@@ -88,20 +88,6 @@ export default {
     menu: "Danh mục",
     notification: "Thông báo",
   },
-  // placeholder các input
-  Placeholder: {
-    fixed_asset_code: "Nhập mã tài sản",
-    search_asset_code_name: "Tìm kiếm theo mã, tên tài sản",
-    search_asset: "Tìm kiếm tài sản",
-    search_voucher: "Tìm kiếm theo số chứng từ, nội dung",
-    category: "Loại tài sản",
-    department: "Bộ phận sử dụng",
-    fixed_asset_name: "Nhập tên tài sản",
-    department_code: "Chọn mã bộ phận sử dụng",
-    asset_category_code: "Chọn mã loại tài sản",
-    login_account: "Username, email hoặc số điện thoại",
-    password: "Mật khẩu",
-  },
   // Tên button
   ButtonName: {
     "asset-add": "Thêm tài sản",
@@ -257,5 +243,11 @@ export default {
     increment_date: "Ngày ghi tăng",
     description: "Ghi chú",
     department: "Bộ phận sử dụng",
+  },
+  // Giới tính
+  Gender: {
+    Other: "Khác",
+    Male: "Nam",
+    Female: "Nữ",
   },
 };

@@ -37,6 +37,8 @@
     </p>
     <!-- Boolean -->
     <p v-else-if="isBoolean()">{{ displayBooleanType() }}</p>
+    <!-- Enum -->
+    <p v-else-if="isEnum()">{{ displayEnumType() }}</p>
     <!-- other -->
     <div v-else class="feature">
       <!-- edit button -->
@@ -115,17 +117,44 @@ export default {
 
     /**
      * @return true nếu kiểu dữ liệu của td là kiểu boolean
-     * @author NVThinh 9/1/2023
+     * @author NVThinh 17/9/2023
      */
     isBoolean: function () {
       return this.config.type === this.tdType.boolean;
     },
 
+    /**
+     * @description Format hiển thị dữ liệu cho kiểu boolean
+     * @author nvthinh 17.9.2023
+     * @returns {String}
+     */
     displayBooleanType: function () {
       if (this.content) {
         return this.config.display.yes;
       }
       return this.config.display.no;
+    },
+
+    /**
+     * @return true nếu kiểu dữ liệu của td là kiểu enum
+     * @author NVThinh 17/9/2023
+     */
+    isEnum: function () {
+      return this.config.type === this.tdType.enum;
+    },
+
+    /**
+     * @description Format hiển thị dữ liệu cho kiểu enum
+     * @author nvthinh 17.9.2023
+     * @returns {String}
+     */
+    displayEnumType: function () {
+      const enumName = this.config.enumName;
+      const keys = Object.keys(Enum[enumName]);
+      const selectedKey = keys.find(
+        (key) => Enum[enumName][key] == this.content
+      );
+      return Resource[enumName][selectedKey];
     },
 
     /**

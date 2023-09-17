@@ -5,6 +5,7 @@ import Main from "@/components/layout/main/Main.vue";
 import RoomCategory from "@/views/tenant/dictionary/roomCategory/RoomCategory.vue";
 import Room from "@/views/tenant/dictionary/room/Room.vue";
 import ServiceCategory from "@/views/tenant/dictionary/serviceCategory/ServiceCategory.vue";
+import User from "@/views/tenant/dictionary/user/User.vue";
 // action
 import Renting from "@/views/tenant/action/renting/Renting.vue";
 // others
@@ -21,23 +22,39 @@ const routes = [
     component: Main,
     children: [
       {
-        path: i18nLayout.LeftNav.RoomCategory,
-        name: i18nLayout.LeftNav.RoomCategory,
+        path: `${i18nLayout.LeftNav.Menu.Dictionary}`,
+        name: i18nLayout.LeftNav.Menu.Dictionary,
         component: RoomCategory,
       },
       {
-        path: i18nLayout.LeftNav.Room,
-        name: i18nLayout.LeftNav.Room,
+        path: `${i18nLayout.LeftNav.Menu.Dictionary}/${i18nLayout.LeftNav.Dictionary.RoomCategory}`,
+        name: i18nLayout.LeftNav.Dictionary.RoomCategory,
+        component: RoomCategory,
+      },
+      {
+        path: `${i18nLayout.LeftNav.Menu.Dictionary}/${i18nLayout.LeftNav.Dictionary.Room}`,
+        name: i18nLayout.LeftNav.Dictionary.Room,
         component: Room,
       },
       {
-        path: i18nLayout.LeftNav.Service,
-        name: i18nLayout.LeftNav.Service,
+        path: `${i18nLayout.LeftNav.Menu.Dictionary}/${i18nLayout.LeftNav.Dictionary.Service}`,
+        name: i18nLayout.LeftNav.Dictionary.Service,
         component: ServiceCategory,
       },
       {
-        path: i18nLayout.LeftNav.Renting,
-        name: i18nLayout.LeftNav.Renting,
+        path: `${i18nLayout.LeftNav.Menu.Dictionary}/${i18nLayout.LeftNav.Dictionary.User}`,
+        name: i18nLayout.LeftNav.Dictionary.User,
+        component: User,
+      },
+      // action
+      {
+        path: `${i18nLayout.LeftNav.Menu.Action}`,
+        name: i18nLayout.LeftNav.Menu.Action,
+        component: Renting,
+      },
+      {
+        path: `${i18nLayout.LeftNav.Menu.Action}/${i18nLayout.LeftNav.Action.Renting}`,
+        name: i18nLayout.LeftNav.Action.Renting,
         component: Renting,
       },
     ],

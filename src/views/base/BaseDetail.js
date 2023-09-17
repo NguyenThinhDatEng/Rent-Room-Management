@@ -3,6 +3,7 @@ import { useStore } from "vuex";
 // api
 import roomAPI from "@/apis/dictionary/roomAPI";
 import rentingAPI from "@/apis/action/rentingAPI";
+import userAPI from "@/apis/dictionary/userAPI";
 // resources
 import fn from "@/commons/commonFunction";
 // resources
@@ -36,6 +37,8 @@ export default {
           return roomAPI;
         case "Rentings":
           return rentingAPI;
+        case "Users":
+          return userAPI;
         default:
           break;
       }
