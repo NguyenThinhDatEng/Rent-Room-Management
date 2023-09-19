@@ -1,4 +1,5 @@
-import { getCurrentInstance, ref } from "vue";
+// libraries
+import { getCurrentInstance } from "vue";
 // Resources
 import TableResource from "@/commons/resource/tableResource";
 import Enum from "@/commons/enum";
@@ -73,11 +74,6 @@ export const useRenting = () => {
     },
   ];
 
-  const isShowUserDetail = ref(false);
-  const toggleIsUserDetail = () => {
-    isShowUserDetail.value = !isShowUserDetail.value;
-  };
-
   /**
    * @override
    * @author nvthinh 17.9.2023
@@ -97,8 +93,6 @@ export const useRenting = () => {
     TableResource,
     Resource,
     Enum,
-    isShowUserDetail,
-    toggleIsUserDetail,
     initConfig,
   };
 };

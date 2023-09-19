@@ -24,15 +24,7 @@
       :entity="detailData"
       :mode="popupMode"
       @close="closePopup"
-      @show-user-detail="toggleIsUserDetail"
-    />
-    <UserDetail
-      v-if="isShowUserDetail"
-      title="người thuê"
-      :width="500"
-      :entity="detailData"
-      :popupMode="Enum.Mode.Add"
-      @close="toggleIsUserDetail"
+      @show-user-detail="openModal"
     />
   </div>
 </template>
@@ -42,7 +34,6 @@
 import TableVue from "@/components/base/table/Table.vue";
 import ButtonIcon from "@/components/base/button/ButtonIcon.vue";
 import RentingDetail from "./RentingDetail.vue";
-import UserDetail from "@/views/tenant/dictionary/user/UserDetail.vue";
 // resources
 import { useRenting } from "./renting";
 // base
@@ -55,7 +46,7 @@ export default {
     TableVue,
     ButtonIcon,
     RentingDetail,
-    UserDetail,
+    // UserDetail,
   },
   setup() {
     const renting = useRenting();

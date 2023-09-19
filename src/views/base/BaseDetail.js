@@ -44,6 +44,14 @@ export default {
           break;
       }
     },
+    popupTitle() {
+      const me = this;
+      if (me.$props.mode == Enum.Mode.Update) {
+        return "Sửa " + me.$props.title;
+      } else {
+        return "Thêm " + me.$props.title;
+      }
+    },
   },
   emits: ["close"],
   created() {

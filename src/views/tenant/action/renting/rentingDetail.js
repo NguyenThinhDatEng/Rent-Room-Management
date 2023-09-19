@@ -6,22 +6,22 @@ import fn from "@/commons/commonFunction";
 
 export const useRentingDetail = (props) => {
   const { proxy } = getCurrentInstance();
-  // cofig to base
-  const controllerName = "Rentings";
-  const dispatchList = ["setAllRenting"];
-  // key
-  const key = "renting_id";
+  /**
+   * @override
+   * @description Cấu hình theo base
+   * @author nvthinh 17.9.2023
+   */
+  const initConfig = () => {
+    const me = proxy;
+    // init
+    me.key = "renting_id";
+    me.controllerName = "Rentings";
+    me.dispatchList = ["setAllRenting"];
+  };
+
   // filter users
   const userNotRenting = computed(() => {
     return proxy.store.state.allUsers.filter((item) => item.is_renting == 0);
-  });
-
-  const popupTitle = computed(() => {
-    if (proxy.$props.mode == Enum.Mode.Update) {
-      return "Sửa " + proxy.$props.title;
-    } else {
-      return "Thêm " + proxy.$props.title;
-    }
   });
 
   /**
@@ -46,19 +46,10 @@ export const useRentingDetail = (props) => {
     }
   };
 
-  /**
-   * @description Hiển thị popup thêm mới người dùng
-   * @author nvthinh 18.9.2023
-   */
-  const showUserDetail = () => {
-    const me = proxy;
-    me.$emit("show-user-detail");
-  };
-
   onMounted(() => {
     const me = proxy;
     // update model
-    me.model[key] = props.entity[key];
+    me.model[me.key] = props.entity[me.key];
     // room
     me.model.room_id = me.store.state.allRooms[0]?.room_id;
     me.model.room_name = me.store.state.allRooms[0]?.room_name;
@@ -68,14 +59,10 @@ export const useRentingDetail = (props) => {
   });
 
   return {
-    popupTitle,
     updateCombobox,
-    controllerName,
+    initConfig,
     beforeSave,
-    key,
     userNotRenting,
-    dispatchList,
-    showUserDetail,
     Enum,
   };
 };

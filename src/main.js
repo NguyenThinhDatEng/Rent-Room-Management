@@ -15,6 +15,13 @@ import VueMask from "@devindex/vue-mask";
 
 const app = createApp(App);
 
+import { register } from "@/commons/globalPopup";
+register(app);
+
+import { createVfm } from "vue-final-modal";
+const vfm = createVfm();
+app.use(vfm);
+
 app.use(router);
 app.use(store);
 app.use(VueMask);

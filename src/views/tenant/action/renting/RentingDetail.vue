@@ -2,6 +2,7 @@
   <Popup
     class="renting-detail"
     :title="popupTitle"
+    :width="400"
     @close-popup="close"
     @on-save="save"
   >
@@ -35,9 +36,9 @@
           :isShowComboboxDataTitle="false"
           @update-combobox="updateCombobox"
         ></ComboboxDetail>
-        <button class="add-user" @click="showUserDetail">
+        <!-- <button class="add-user" @click="showUserDetail">
           <div class="icon icon--plus-black w-10 h-10 center"></div>
-        </button>
+        </button> -->
       </div>
       <div class="row">
         <Input
@@ -106,7 +107,6 @@ export default {
       type: Number,
     },
   },
-  emits: ["show-user-detail"],
   setup(props) {
     const rentingDetail = useRentingDetail(props);
     return rentingDetail;
