@@ -1,0 +1,20 @@
+.renting {
+  display: flex;
+  flex-direction: column;
+
+  .room-category_feature {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+
+    .content_name {
+      font-weight: 700;
+      font-size: 24px;
+    }
+  }
+
+  .search {
+    width: 20%;
+  }
+}

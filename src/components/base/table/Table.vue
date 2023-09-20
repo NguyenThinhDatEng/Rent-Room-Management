@@ -41,6 +41,7 @@
           :tds="tds"
           feature
           :isOnly="onlyOneRow"
+          :features="features"
           @update-row="updateRow"
           @update-voucher="updateVoucher"
           @update-checked-header="updateCheckedHeader"
@@ -133,6 +134,15 @@ export default {
       type: Number,
       default: 0,
     }, // Vị trí bắt đầu của
+    /**
+     * Mảng các tính năng hiển thị
+     */
+    features: {
+      type: Array,
+      default: () => {
+        return ["edit", "delete"];
+      },
+    },
   },
   components: { Row, TableFoot },
   emits: [

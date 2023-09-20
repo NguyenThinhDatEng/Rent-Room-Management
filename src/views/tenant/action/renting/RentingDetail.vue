@@ -42,13 +42,12 @@
       </div>
       <div class="row">
         <Input
-          label="Tiền cọc"
-          placeholder="100000"
-          field="deposit"
+          label="Tiền phòng"
+          field="price"
           :hasLabel="true"
           mask="decimal"
           :max-length="22"
-          v-model="model.deposit"
+          v-model="model.price"
           class="mr-2"
         ></Input>
         <Input
@@ -58,6 +57,17 @@
           mask="date"
           placeholder="01/01/2023"
           v-model="model.room_rental_date"
+        ></Input>
+      </div>
+      <div class="row">
+        <Input
+          label="Tiền cọc"
+          placeholder="100000"
+          field="deposit"
+          :hasLabel="true"
+          mask="decimal"
+          :max-length="22"
+          v-model="model.deposit"
         ></Input>
       </div>
     </div>

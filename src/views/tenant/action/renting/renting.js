@@ -1,5 +1,5 @@
 // libraries
-import { getCurrentInstance } from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
 // Resources
 import TableResource from "@/commons/resource/tableResource";
 import Enum from "@/commons/enum";
@@ -8,12 +8,13 @@ import Resource from "@/commons/resource";
 export const useRenting = () => {
   const { proxy } = getCurrentInstance();
 
+  //#region Config table
   const cols = {
     numerical_order: { ENG: "numerical_order", VN: "STT" },
     room_name: { ENG: "room_name", VN: "Tên phòng" },
+    price: { ENG: "price", VN: "Giá phòng" },
     user_name: { ENG: "user_name", VN: "Người thuê" },
     phone_number: { ENG: "renter_name", VN: "Số điện thoại" },
-    identifier_number: { ENG: "identifier_number", VN: "CMND/CCCD" },
     room_rental_date: { ENG: "room_rental_date", VN: "Ngày thuê" },
     deposit: { ENG: "deposit", VN: "Tiền cọc" },
     feature: { ENG: "feature", VN: "Tính năng" },
@@ -31,25 +32,24 @@ export const useRenting = () => {
       col: "room_name",
       type: Enum.TableData.type.text,
       minWidth: "90px",
-      maxWidth: "180px",
+      maxWidth: "150px",
       align: "left",
+    },
+    {
+      col: "price",
+      type: Enum.TableData.type.number,
+      width: "120px",
+      align: "right",
     },
     {
       col: "user_name",
       type: Enum.TableData.type.text,
-      minWidth: "90px",
+      minWidth: "150px",
       maxWidth: "180px",
       align: "left",
     },
     {
       col: "phone_number",
-      type: Enum.TableData.type.text,
-      minWidth: "90px",
-      maxWidth: "180px",
-      align: "left",
-    },
-    {
-      col: "identifier_number",
       type: Enum.TableData.type.text,
       minWidth: "90px",
       maxWidth: "180px",
@@ -73,6 +73,7 @@ export const useRenting = () => {
       width: "120px",
     },
   ];
+  //#endregion
 
   /**
    * @override
@@ -84,8 +85,30 @@ export const useRenting = () => {
     me.key = "renting_id";
     me.controllerName = "Rentings";
     me.itemsName = "allRenting";
-    me.dispatchList = ["setAllRenting", "setAllRooms", "setAllUsers"];
+    me.dispatchList = [
+      "setAllRenting",
+      "setAllRooms",
+      "setAllRoomCategories",
+      "setAllUsers",
+    ];
   };
+
+  const isShowPaymentDetail = ref(false);
+  /**
+   * @override
+   * @param {*} mode
+   * @param {*} entity
+   */
+  const clickGridActionCustom = (mode, entity) => {
+    const me = proxy;
+    me.detailData = entity;
+    isShowPaymentDetail.value = true;
+  };
+
+  onMounted(() => {
+    const me = proxy;
+    me.model.keyWord = "";
+  });
 
   return {
     cols,
@@ -94,5 +117,7 @@ export const useRenting = () => {
     Resource,
     Enum,
     initConfig,
+    clickGridActionCustom,
+    isShowPaymentDetail,
   };
 };

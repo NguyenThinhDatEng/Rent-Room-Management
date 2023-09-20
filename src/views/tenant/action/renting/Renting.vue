@@ -1,5 +1,5 @@
 <template>
-  <div class="room-category">
+  <div class="renting flex">
     <div class="room-category_feature">
       <div class="content_name">Quản lý thuê phòng</div>
       <button-icon
@@ -11,10 +11,24 @@
         @click="add"
       ></button-icon>
     </div>
+    <!-- Search -->
+    <div class="search mb-2 pl-1">
+      <Input
+        placeholder="Tìm kiếm"
+        field="keyWord"
+        :hasLabel="false"
+        :max-length="255"
+        v-model="model.keyWord"
+        @keyup.enter="refresh({ keyWord: model.keyWord })"
+      ></Input>
+    </div>
+    <!-- Table -->
     <table-vue
       :data="items"
       :cols="cols"
       :tds="tds"
+      :features="['payment']"
+      class="flex"
       @clickGridAction="clickGridAction"
     ></table-vue>
     <RentingDetail
@@ -24,7 +38,11 @@
       :entity="detailData"
       :mode="popupMode"
       @close="closePopup"
-      @show-user-detail="openModal"
+    />
+    <PaymentDetail
+      v-if="isShowPaymentDetail"
+      :entity="detailData"
+      @close="closePopup"
     />
   </div>
 </template>
@@ -33,7 +51,9 @@
 // components
 import TableVue from "@/components/base/table/Table.vue";
 import ButtonIcon from "@/components/base/button/ButtonIcon.vue";
+import Input from "@/components/base/input/Input.vue";
 import RentingDetail from "./RentingDetail.vue";
+import PaymentDetail from "./PaymentDetail.vue";
 // resources
 import { useRenting } from "./renting";
 // base
@@ -46,7 +66,8 @@ export default {
     TableVue,
     ButtonIcon,
     RentingDetail,
-    // UserDetail,
+    Input,
+    PaymentDetail,
   },
   setup() {
     const renting = useRenting();
@@ -56,5 +77,5 @@ export default {
 </script>
 
 <style scoped>
-@import "./dictionary.css";
+@import "./renting.scss";
 </style>

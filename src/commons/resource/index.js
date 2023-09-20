@@ -69,6 +69,7 @@ export default {
     noSave: "Không lưu thông tin thay đổi",
     cancel: "Hủy bỏ",
     add_voucher: "Thêm mới chứng từ",
+    pay: "Thanh toán",
   },
   // Liên quan sản phẩm
   QLTS: {

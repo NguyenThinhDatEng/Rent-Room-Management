@@ -43,15 +43,24 @@
     <div v-else class="feature">
       <!-- edit button -->
       <div
+        v-if="features.includes('edit')"
         class="icon icon--edit"
         :title="title.edit"
         @click="clickGridAction(Enum.Mode.Update)"
       ></div>
       <!-- delete button -->
       <div
+        v-if="features.includes('delete')"
         class="icon icon--18px icon--delete"
         :title="title.delete"
         @click="clickGridAction(Enum.Mode.Delete)"
+      ></div>
+      <!-- payment button -->
+      <div
+        v-if="features.includes('payment')"
+        class="icon icon--payment"
+        :title="title.pay"
+        @click="clickGridAction('Pay')"
       ></div>
     </div>
   </td>
@@ -84,6 +93,15 @@ export default {
         return {
           minWidth: 100,
         };
+      },
+    },
+    /**
+     * Mảng các tính năng hiển thị
+     */
+    features: {
+      type: Array,
+      default: () => {
+        return ["edit", "delete"];
       },
     },
   },

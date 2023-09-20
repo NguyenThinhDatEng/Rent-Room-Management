@@ -3,8 +3,11 @@ import httpClient from "./httpClient";
 export default class BaseAPI {
   endPoint = "";
 
-  async getAsync() {
-    return await httpClient.get(this.endPoint);
+  async getAsync(config) {
+    const params = {
+      keyWord: config?.keyWord || "",
+    };
+    return await httpClient.get(this.endPoint, { params });
   }
 
   async postAsync(payload) {

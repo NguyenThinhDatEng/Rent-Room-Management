@@ -80,9 +80,9 @@ const store = createStore({
       }
     },
 
-    async setAllRenting({ commit }) {
+    async setAllRenting({ commit }, config) {
       try {
-        const res = await rentingAPI.getAsync();
+        const res = await rentingAPI.getAsync(config);
         if (res.data) {
           commit("setAllRenting", res.data);
         }

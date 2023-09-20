@@ -3,9 +3,16 @@ import { getCurrentInstance, onMounted, computed } from "vue";
 import Enum from "@/commons/enum";
 // resources
 import fn from "@/commons/commonFunction";
+import moment from "moment";
 
 export const useRentingDetail = (props) => {
   const { proxy } = getCurrentInstance();
+
+  // filter users
+  const userNotRenting = computed(() => {
+    return proxy.store.state.allUsers.filter((item) => item.is_renting == 0);
+  });
+
   /**
    * @override
    * @description Cấu hình theo base
@@ -17,12 +24,11 @@ export const useRentingDetail = (props) => {
     me.key = "renting_id";
     me.controllerName = "Rentings";
     me.dispatchList = ["setAllRenting"];
-  };
 
-  // filter users
-  const userNotRenting = computed(() => {
-    return proxy.store.state.allUsers.filter((item) => item.is_renting == 0);
-  });
+    me.defaultData = {
+      room_rental_date: moment(new Date()).format("DD/MM/YYYY"),
+    };
+  };
 
   /**
    * @description Cập nhật dữ liệu khi combobox thay đổi
@@ -50,12 +56,6 @@ export const useRentingDetail = (props) => {
     const me = proxy;
     // update model
     me.model[me.key] = props.entity[me.key];
-    // room
-    me.model.room_id = me.store.state.allRooms[0]?.room_id;
-    me.model.room_name = me.store.state.allRooms[0]?.room_name;
-    // user
-    me.model.user_id = userNotRenting.value[0]?.user_id;
-    me.model.user_name = userNotRenting.value[0]?.user_name;
   });
 
   return {

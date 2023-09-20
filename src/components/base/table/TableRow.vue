@@ -12,6 +12,7 @@
       :config="td"
       :content="getTdContent(td.col)"
       :isActive="isActive"
+      :features="features"
       ref="td"
       @click-checkbox="onClickCheckBox = true"
       @click-grid-action="clickGridAction"
@@ -62,6 +63,15 @@ export default {
     tableRowObj: Object, // Đối tượng chứa dữ liệu hiển thị
     isCheckAll: Boolean, // true nếu ô checkbox all được tick
     isRefreshTable: Boolean, // làm mới bảng => bỏ active tất cả các dòng
+    /**
+     * Mảng các tính năng hiển thị
+     */
+    features: {
+      type: Array,
+      default: () => {
+        return ["edit", "delete"];
+      },
+    },
   },
 
   components: {

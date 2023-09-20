@@ -14,12 +14,12 @@ export default {
       key: "",
       name: "",
       detailData: {},
+      model: {},
       isShowPopup: false,
       popupMode: 0,
       controllerName: "",
       dispatchList: [],
       itemsName: "",
-      defaultDetailData: {},
     };
   },
   computed: {
@@ -73,18 +73,42 @@ export default {
       me.showPopup();
     },
 
+    /**
+     * @description Thực hiện khi nhấn nút trong cột chức năng
+     * @param {Number, String} mode
+     * @param {Object} entity
+     * @author nvthinh 20.9.2023
+     */
     async clickGridAction(mode, entity) {
-      this.detailData = entity;
+      const me = this;
+
+      me.detailData = entity;
       if (mode === Enum.Mode.Delete) {
         const res = await this.deleteAsync(entity[this.key]);
         // update store
         if (res) {
-          this.store.dispatch(this.dispatchList[0]);
+          this.refresh();
         }
-      } else {
+      } else if (mode === Enum.Mode.Update) {
         this.popupMode = Enum.Mode.Update;
         this.showPopup();
+      } else {
+        me.clickGridActionCustom(mode, entity);
       }
+    },
+
+    /**
+     * @description Thực thi nếu không phải chức năng mặc định
+     * @author nvthinh 20.9.2023
+     */
+    clickGridActionCustom() {},
+
+    /**
+     * Load lại dữ liệu chính
+     * @author nvthinh 19.9.2023
+     */
+    async refresh(config = {}) {
+      this.store.dispatch(this.dispatchList[0], config);
     },
 
     async deleteAsync(id) {

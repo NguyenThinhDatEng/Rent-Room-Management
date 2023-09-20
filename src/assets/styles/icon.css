@@ -289,3 +289,9 @@
 .icon--plus-black {
     background-position: -467px -423px;
 }
+
+.icon--payment {
+    background: url('../imgs/icons/hand.png');
+    width: 16px;
+    height: 16px;
+}

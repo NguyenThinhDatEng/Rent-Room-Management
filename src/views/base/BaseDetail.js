@@ -62,7 +62,14 @@ export default {
     });
   },
   mounted() {
-    window._detail = this;
+    const me = this;
+    window._detail = me;
+
+    if (me.$props.mode == Enum.Mode.Add) {
+      me.model = me.defaultData;
+    } else {
+      me.model = me.$props.entity;
+    }
   },
 
   unmounted() {},

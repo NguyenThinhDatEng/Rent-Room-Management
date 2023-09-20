@@ -1,8 +1,9 @@
 <template>
   <div class="input__wrapper">
     <!-- label of input-->
-    <label v-show="hasLabel" :for="inputId">
-      {{ label }} <span v-show="isRequired" style="color: red">*</span></label
+    <label v-if="hasLabel" :for="inputId">
+      {{ label }}
+      <span v-show="hasLabel && isRequired" style="color: red">*</span></label
     >
     <!-- Money -->
     <input
