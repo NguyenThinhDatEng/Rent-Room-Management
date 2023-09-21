@@ -295,3 +295,15 @@
     width: 16px;
     height: 16px;
 }
+
+.icon--check-out {
+    background: url('../imgs/icons/logout.png');
+    width: 16px;
+    height: 16px;
+}
+
+.icon--round-about {
+    background: url('../imgs/icons/roundabout.png');
+    width: 16px;
+    height: 16px;
+}

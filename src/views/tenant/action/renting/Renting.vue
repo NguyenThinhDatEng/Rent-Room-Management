@@ -28,7 +28,7 @@
       :data="items"
       :cols="cols"
       :tds="tds"
-      :features="['payment']"
+      :features="['payment', 'check-out']"
       class="flex"
       @clickGridAction="clickGridAction"
     ></table-vue>
@@ -43,7 +43,7 @@
     <PaymentDetail
       v-if="isShowPaymentDetail"
       :entity="detailData"
-      @close="closePopup"
+      @close="closePaymentDetail"
     />
   </div>
 </template>

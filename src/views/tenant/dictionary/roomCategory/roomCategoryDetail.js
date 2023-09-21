@@ -67,9 +67,15 @@ export const useRoomCategoryDetail = (props) => {
   // data
   const model = reactive({});
   onMounted(() => {
-    model.room_category_id = props.entity?.room_category_id || "";
-    model.room_category_name = props.entity?.room_category_name || "";
-    model.unit_price = props.entity?.unit_price || 0;
+    if (proxy.mode == Enum.Mode.Add) {
+      model.room_category_id = "";
+      model.room_category_name = "";
+      model.unit_price = 0;
+    } else {
+      model.room_category_id = props.entity?.room_category_id || "";
+      model.room_category_name = props.entity?.room_category_name || "";
+      model.unit_price = props.entity?.unit_price || 0;
+    }
   });
 
   return { add, model, close };

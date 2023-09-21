@@ -62,6 +62,20 @@
         :title="title.pay"
         @click="clickGridAction('Pay')"
       ></div>
+      <!-- check out button -->
+      <div
+        v-if="features.includes('check-out')"
+        class="icon icon--check-out"
+        :title="'Trả phòng'"
+        @click="clickGridAction(Enum.Mode.Delete)"
+      ></div>
+      <!-- round about button -->
+      <div
+        v-if="features.includes('round-about')"
+        class="icon icon--round-about"
+        :title="'Gia hạn'"
+        @click="clickGridAction('Extend')"
+      ></div>
     </div>
   </td>
 </template>

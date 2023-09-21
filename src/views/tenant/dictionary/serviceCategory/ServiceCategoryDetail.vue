@@ -1,5 +1,5 @@
 <template>
-  <Popup :title="popupTitle" @close-popup="close" @on-save="add">
+  <Popup :title="popupTitle" @close-popup="close" @on-save="save">
     <div class="popup__body__wrapper">
       <div class="room-category_name">
         <Input
@@ -21,9 +21,12 @@ import Popup from "@/components/base/popup/VPopup.vue";
 import Input from "@/components/base/input/Input.vue";
 // Resources
 import { useServiceCategoryDetail } from "./serviceCategoryDetail";
+// base
+import BaseDetail from "@/views/base/BaseDetail";
 
 export default {
   name: "RoomCategoryDetail",
+  extends: BaseDetail,
   components: {
     Popup,
     Input,
@@ -53,8 +56,8 @@ export default {
       type: Number,
     },
   },
-  setup(props) {
-    const serviceCategoryDetail = useServiceCategoryDetail(props);
+  setup() {
+    const serviceCategoryDetail = useServiceCategoryDetail();
     return serviceCategoryDetail;
   },
 };

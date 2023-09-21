@@ -1,79 +1,41 @@
-import { getCurrentInstance, onMounted, reactive, computed } from "vue";
-// api
-import serviceCategoryAPI from "@/apis/dictionary/serviceCategoryAPI";
-import fn from "@/commons/commonFunction";
-// store
-import { useStore } from "vuex";
+import { getCurrentInstance, onMounted } from "vue";
 // Resources
 import Enum from "@/commons/enum";
 
-export const useServiceCategoryDetail = (props) => {
+export const useServiceCategoryDetail = () => {
   const { proxy } = getCurrentInstance();
-  // store
-  const store = useStore();
-  // key
-  const key = "service_category_id";
-  const name = "service_category_name";
 
-  const add = async () => {
-    if (!validateRequire()) {
-      return;
-    }
-    try {
-      let res = null;
-      let payload = {
-        ...model,
-      };
-      payload[key] = fn.uuidv4();
-      // call api
-      if (props.mode == Enum.Mode.Add) {
-        res = await serviceCategoryAPI.postAsync(payload);
-        // update store
-        if (res.data) {
-          store.state.allServiceCategories = [
-            res.data,
-            ...store.state.allServiceCategories,
-          ];
-        }
-      } else {
-        res = await serviceCategoryAPI.putAsync(model);
-        // update store
-        if (res.data) {
-          store.dispatch("setAllServiceCategories");
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      close();
-    }
+  /**
+   * @override
+   * @author nvthinh 17.9.2023
+   */
+  const initConfig = () => {
+    const me = proxy;
+    // init
+    me.key = "service_category_id";
+    me.name = "service_category_name";
+    me.controllerName = "ServiceCategories";
+    me.dispatchList = ["setAllServiceCategories"];
+    me.itemsName = "allServiceCategories";
   };
 
   const validateRequire = () => {
-    if (model.service_category_name == "") {
+    const me = proxy;
+    if (me.model.service_category_name == "") {
       return false;
     }
     return true;
   };
 
-  const close = () => {
-    proxy.$parent.close();
-  };
-
-  // data
-  const model = reactive({});
   onMounted(() => {
-    model[key] = props.entity[key];
-    model.service_category_name = props.entity[name];
-  });
-
-  const popupTitle = computed(() => {
-    if (proxy.$props.mode == Enum.Mode.Update) {
-      return "Sửa " + proxy.$props.title;
+    const me = proxy;
+    if (me.mode == Enum.Mode.Add) {
+      me.model.service_category_name = "";
     } else {
-      return "Thêm " + proxy.$props.title;
+      me.model[me.key] = me.entity[me.key];
+      me.model.service_category_name = me.entity[me.name];
     }
   });
 
-  return { add, model, close, popupTitle };
+  return { initConfig, validateRequire };
 };

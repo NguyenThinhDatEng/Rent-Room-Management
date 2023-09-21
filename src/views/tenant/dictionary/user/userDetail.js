@@ -1,17 +1,9 @@
-import { getCurrentInstance, onMounted, computed } from "vue";
-// Resources
-import Enum from "@/commons/enum";
+import { getCurrentInstance } from "vue";
+// resource
+import commonFunction from "@/commons/commonFunction";
 
 export const useUserDetail = () => {
   const { proxy } = getCurrentInstance();
-
-  const popupTitle = computed(() => {
-    if (proxy.$props.popupMode == Enum.Mode.Update) {
-      return "Sửa " + proxy.$props.title;
-    } else {
-      return "Thêm " + proxy.$props.title;
-    }
-  });
 
   /**
    * @override
@@ -33,19 +25,15 @@ export const useUserDetail = () => {
     };
   };
 
-  // data
-  onMounted(() => {
+  const beforeSave = () => {
     const me = proxy;
-    // update model
-    if (me.popupMode == Enum.Mode.Update) {
-      me.model = me.$props.entity;
-    } else {
-      me.model = me.defaultData;
-    }
-  });
+    me.model.phone_number = commonFunction.removeSpecialCharacters(
+      me.model.phone_number
+    );
+  };
 
   return {
-    popupTitle,
     initConfig,
+    beforeSave,
   };
 };

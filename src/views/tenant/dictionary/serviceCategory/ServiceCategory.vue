@@ -23,12 +23,12 @@
       :width="500"
       :entity="detail"
       :mode="popupMode"
+      @close="closePopup"
     />
   </div>
 </template>
 
 <script>
-import { computed, ref } from "vue";
 // components
 import TableVue from "@/components/base/table/Table.vue";
 import ButtonIcon from "@/components/base/button/ButtonIcon.vue";
@@ -37,27 +37,34 @@ import ServiceCategoryDetail from "./ServiceCategoryDetail.vue";
 import TableResource from "@/commons/resource/tableResource";
 import Enum from "@/commons/enum";
 import Resource from "@/commons/resource";
-// store
-import { useStore } from "vuex";
-// api
-import serviceCategoryAPI from "@/apis/dictionary/serviceCategoryAPI";
+// base
+import BaseList from "@/views/base/BaseList";
+import { getCurrentInstance } from "vue";
 
 export default {
   name: "ServiceVue",
+  extends: BaseList,
   components: {
     TableVue,
     ButtonIcon,
     ServiceCategoryDetail,
   },
   setup() {
-    // store
-    const store = useStore();
-    store.dispatch("setAllServiceCategories");
-    const items = computed(() => {
-      return store.state.allServiceCategories;
-    });
-    // key
-    const key = "service_category_id";
+    const { proxy } = getCurrentInstance();
+
+    /**
+     * @override
+     * @author nvthinh 17.9.2023
+     */
+    const initConfig = () => {
+      const me = proxy;
+      // init
+      me.key = "service_category_id";
+      me.name = "service_category_name";
+      me.controllerName = "ServiceCategories";
+      me.dispatchList = ["setAllServiceCategories"];
+      me.itemsName = "allServiceCategories";
+    };
 
     const cols = {
       numerical_order: { ENG: "numerical_order", VN: "STT" },
@@ -88,66 +95,12 @@ export default {
       },
     ];
 
-    const popupMode = ref(0);
-    const add = () => {
-      popupMode.value = Enum.Mode.Add;
-      showPopup();
-    };
-
-    const isShowPopup = ref(false);
-    /**
-     * @description Hiển thị popup
-     * @author NVThinh 05/09/2023
-     */
-    const showPopup = () => {
-      isShowPopup.value = true;
-    };
-
-    /**
-     * @description Đóng popup
-     * @author NVThinh 05/09/2023
-     */
-    const close = () => {
-      isShowPopup.value = false;
-    };
-
-    // data of Detail
-    const detail = ref(null);
-    const clickGridAction = async (mode, entity) => {
-      detail.value = entity;
-      if (mode === Enum.Mode.Delete) {
-        const res = await deleteAsync(entity[key]);
-        // update store
-        if (res) {
-          store.dispatch("setAllServiceCategories");
-        }
-      } else {
-        popupMode.value = Enum.Mode.Update;
-        showPopup();
-      }
-    };
-
-    const deleteAsync = async (id) => {
-      try {
-        const res = await serviceCategoryAPI.deleteAsync(id);
-        return res;
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     return {
-      items,
       cols,
       TableResource,
       tds,
       Resource,
-      add,
-      popupMode,
-      isShowPopup,
-      close,
-      clickGridAction,
-      detail,
+      initConfig,
     };
   },
 };

@@ -4,6 +4,7 @@ import { useStore } from "vuex";
 import roomAPI from "@/apis/dictionary/roomAPI";
 import rentingAPI from "@/apis/action/rentingAPI";
 import userAPI from "@/apis/dictionary/userAPI";
+import serviceCategoryAPI from "@/apis/dictionary/serviceCategoryAPI";
 // resources
 import fn from "@/commons/commonFunction";
 // resources
@@ -37,16 +38,18 @@ export default {
           return rentingAPI;
         case "Users":
           return userAPI;
+        case "ServiceCategories":
+          return serviceCategoryAPI;
         default:
           break;
       }
     },
     popupTitle() {
       const me = this;
-      if (me.$props.mode == Enum.Mode.Update) {
-        return "Sửa " + me.$props.title;
+      if (me.mode == Enum.Mode.Update) {
+        return "Sửa " + me.title;
       } else {
-        return "Thêm " + me.$props.title;
+        return "Thêm " + me.title;
       }
     },
   },
@@ -81,6 +84,11 @@ export default {
      */
     initConfig() {},
 
+    /**
+     * @description Thực hiện lưu
+     * @returns
+     * @author nvthinh 9.2023
+     */
     async save() {
       const me = this;
 
@@ -89,7 +97,6 @@ export default {
       }
 
       me.beforeSave();
-
       try {
         let res = null;
         let payload = {

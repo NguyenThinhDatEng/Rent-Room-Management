@@ -75,7 +75,7 @@ export default {
     /**
      * mode of popup
      */
-    popupMode: {
+    mode: {
       type: Number,
     },
   },

@@ -5,6 +5,8 @@ import Enum from "@/commons/enum";
 // api
 import roomAPI from "@/apis/dictionary/roomAPI";
 import rentingAPI from "@/apis/action/rentingAPI";
+import userAPI from "@/apis/dictionary/userAPI";
+import serviceCategoryAPI from "@/apis/dictionary/serviceCategoryAPI";
 
 export default {
   name: "BaseList",
@@ -35,6 +37,10 @@ export default {
           return roomAPI;
         case "Rentings":
           return rentingAPI;
+        case "Users":
+          return userAPI;
+        case "ServiceCategories":
+          return serviceCategoryAPI;
         default:
           break;
       }

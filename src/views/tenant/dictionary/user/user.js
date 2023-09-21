@@ -76,6 +76,7 @@ export const useUser = () => {
     me.key = "user_id";
     me.itemsName = "allUsers";
     me.dispatchList = ["setAllUsers"];
+    me.controllerName = "Users";
     me.defaultDetailData = {
       user_id: "",
       user_name: "",

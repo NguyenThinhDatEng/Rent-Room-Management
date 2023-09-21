@@ -58,39 +58,35 @@ export default {
             name: "Thuê phòng",
             linkTo: { name: i18nLayout.LeftNav.Action.Renting },
           },
-          {
-            name: "Trả phòng",
-            linkTo: { name: i18nLayout.LeftNav.Room },
-          },
         ],
       },
-      {
-        path: "statistic",
-        name: "Thống kê",
-        isShowSubMenu: false,
-        subMenu: [
-          {
-            name: "Phòng đang thuê",
-            linkTo: { name: i18nLayout.LeftNav.Renting },
-          },
-          {
-            name: "Phòng trống",
-            linkTo: { name: i18nLayout.LeftNav.Renting },
-          },
-          {
-            name: "Tiền điện",
-            linkTo: { name: i18nLayout.LeftNav.Renting },
-          },
-          {
-            name: "Tiền nước",
-            linkTo: { name: i18nLayout.LeftNav.Renting },
-          },
-          {
-            name: "Doanh thu",
-            linkTo: { name: i18nLayout.LeftNav.Renting },
-          },
-        ],
-      },
+      // {
+      //   path: "statistic",
+      //   name: "Thống kê",
+      //   isShowSubMenu: false,
+      //   subMenu: [
+      //     {
+      //       name: "Phòng đang thuê",
+      //       linkTo: { name: i18nLayout.LeftNav.Renting },
+      //     },
+      //     {
+      //       name: "Phòng trống",
+      //       linkTo: { name: i18nLayout.LeftNav.Renting },
+      //     },
+      //     {
+      //       name: "Tiền điện",
+      //       linkTo: { name: i18nLayout.LeftNav.Renting },
+      //     },
+      //     {
+      //       name: "Tiền nước",
+      //       linkTo: { name: i18nLayout.LeftNav.Renting },
+      //     },
+      //     {
+      //       name: "Doanh thu",
+      //       linkTo: { name: i18nLayout.LeftNav.Renting },
+      //     },
+      //   ],
+      // },
     ]);
 
     /**

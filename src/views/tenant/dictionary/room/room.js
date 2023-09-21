@@ -1,14 +1,23 @@
+import { getCurrentInstance } from "vue";
 // Resources
 import TableResource from "@/commons/resource/tableResource";
 import Enum from "@/commons/enum";
 import Resource from "@/commons/resource";
 
 export const useRoom = () => {
-  // config to base
-  const dispatchList = ["setAllRooms", "setAllRoomCategories"];
-  const itemsName = "allRooms";
-  // key
-  const key = "room_id";
+  const { proxy } = getCurrentInstance();
+  /**
+   * @override
+   * @author nvthinh 17.9.2023
+   */
+  const initConfig = () => {
+    const me = proxy;
+    // init
+    me.key = "room_id";
+    me.controllerName = "Rooms";
+    me.itemsName = "allRooms";
+    me.dispatchList = ["setAllRooms", "setAllRoomCategories"];
+  };
 
   const cols = {
     numerical_order: { ENG: "numerical_order", VN: "STT" },
@@ -59,8 +68,6 @@ export const useRoom = () => {
     tds,
     Resource,
     close,
-    dispatchList,
-    key,
-    itemsName,
+    initConfig,
   };
 };

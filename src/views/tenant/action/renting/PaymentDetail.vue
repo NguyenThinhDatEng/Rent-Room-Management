@@ -16,23 +16,23 @@
         <div>{{ numeral(model.price).format("0,0") }}</div>
       </div>
       <div class="row-detail mb-2">
-        <label>Số tiền thanh toán:</label>
+        <label>Số tiền đã thanh toán:</label>
         <Input
           field="payment"
           mask="decimal"
           :max-length="22"
           :hasLabel="false"
-          v-model="model.payment"
+          v-model="amountPaid"
         ></Input>
       </div>
       <div class="row-detail mb-2">
-        <label>Số tiền thanh toán:</label>
+        <label>Số tiền còn lại cần thanh toán:</label>
         <Input
           field="remaining"
           mask="decimal"
           :max-length="22"
           :hasLabel="false"
-          v-model="model.remaining"
+          v-model="remaining"
           :isDisabled="true"
         ></Input>
       </div>

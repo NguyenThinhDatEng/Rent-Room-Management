@@ -36,8 +36,16 @@ export const useRentingDetail = () => {
     me.key = "renting_id";
     me.controllerName = "Rentings";
     me.dispatchList = ["setAllRenting"];
+    // get next month
+    const currentDate = new Date();
+    const futureDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1,
+      currentDate.getDate()
+    );
     me.defaultData = {
-      room_rental_date: moment(new Date()).format("DD/MM/YYYY"),
+      room_rental_date: moment(currentDate).format("DD/MM/YYYY"),
+      check_out_date: moment(futureDate).format("DD/MM/YYYY"),
     };
   };
 
@@ -52,10 +60,17 @@ export const useRentingDetail = () => {
     });
   };
 
+  const userIds = reactive([]);
+  /**
+   * @override
+   * @description Xử lý sự kiện trước khi lưu
+   * @author nvthinh 9.2023
+   */
   const beforeSave = () => {
     const me = proxy;
     // convert string to Date
-    me.model.room_rental_date = new Date(me.model.room_rental_date);
+    me.model.room_rental_date = convertToDate(me.model.room_rental_date);
+    me.model.check_out_date = convertToDate(me.model.check_out_date);
     // Cập nhật số tiền cọc
     if (typeof me.model.deposit === "string") {
       const tmp = fn.removeSpecialCharacters(me.model.deposit);
@@ -66,23 +81,36 @@ export const useRentingDetail = () => {
       const tmp = fn.removeSpecialCharacters(me.model.price);
       me.model.price = Number(tmp);
     }
-    // create userIds
-    let userIds = [];
-    // Cập nhật các bản ghi được thêm mới
-    me.items.forEach((item) => {
-      const isAdd = !oldItems.value.some((ele) => ele.user_id == item.user_id);
-      if (isAdd) {
-        userIds.push({ id: item.user_id, tag: 1 });
-      }
-    });
-    // Cập nhật các bản ghi bị xóa đi
-    oldItems.value.forEach((item) => {
-      const isDelete = !me.items.some((ele) => ele.user_id == item.user_id);
-      if (isDelete) {
-        userIds.push({ id: item.user_id, tag: -1 });
-      }
-    });
-    debugger;
+    if (me.mode == Enum.Mode.Update) {
+      // Cập nhật các bản ghi được thêm mới
+      me.items.forEach((item) => {
+        const isAdd = !oldItems.value.some(
+          (ele) => ele.user_id == item.user_id
+        );
+        if (isAdd) {
+          userIds.push({ id: item.user_id, tag: 1 });
+        }
+      });
+      // Cập nhật các bản ghi bị xóa đi
+      oldItems.value.forEach((item) => {
+        const isDelete = !me.items.some((ele) => ele.user_id == item.user_id);
+        if (isDelete) {
+          userIds.push({ id: item.user_id, tag: -1 });
+        }
+      });
+    }
+  };
+
+  /**
+   * Convert 'dd/mm/yyyy' to date type
+   * @param {String} dateString
+   * @returns
+   * @author nvthinh 9.2023
+   */
+  const convertToDate = (dateString) => {
+    const [day, month, year] = dateString.split("/");
+    const date = new Date(year, month - 1, day);
+    return date;
   };
 
   //#region Config table
@@ -171,6 +199,7 @@ export const useRentingDetail = () => {
     );
     if (roomCategory) {
       me.model.price = roomCategory.unit_price;
+      me.model.deposit = roomCategory.unit_price;
     }
   };
 
@@ -193,6 +222,10 @@ export const useRentingDetail = () => {
   };
 
   const oldItems = ref([]);
+  /**
+   * @description Cập nhật trước khi bind dữ liệu
+   * @author nvthinh 9.2023
+   */
   const beforeBinding = async () => {
     const me = proxy;
 
@@ -235,6 +268,60 @@ export const useRentingDetail = () => {
     }
   };
 
+  const save = async () => {
+    const me = proxy;
+
+    if (!me.validateRequire()) {
+      return;
+    }
+
+    me.beforeSave();
+
+    try {
+      let res = null;
+      let payload = {
+        ...me.model,
+      };
+      payload[me.key] = fn.uuidv4();
+      // call api
+      if (me.mode == Enum.Mode.Add) {
+        res = await me.api.postAsync(payload);
+        // update store
+        if (res.data && me.dispatchList[0]) {
+          me.store.dispatch(me.dispatchList[0]);
+        }
+      } else {
+        const userIdsString = JSON.stringify(userIds);
+        res = await me.api.putCustomAsync(me.model, userIdsString);
+        // update store
+        if (res.data && me.dispatchList[0]) {
+          me.store.dispatch(me.dispatchList[0]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      me.close();
+    }
+  };
+
+  /**
+   * @description validate before save
+   * @returns {Bool}
+   * @author nvthinh 9.2023
+   */
+  const validateRequire = () => {
+    const me = proxy;
+
+    if (me.mode == Enum.Mode.Update) {
+      if (me.items.length == 0) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   return {
     updateCombobox,
     initConfig,
@@ -251,5 +338,7 @@ export const useRentingDetail = () => {
     selectUser,
     roomItems,
     oldItems,
+    save,
+    validateRequire,
   };
 };

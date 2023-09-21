@@ -1,20 +1,26 @@
 import { getCurrentInstance, onMounted, computed } from "vue";
-// Resources
-import Enum from "@/commons/enum";
 
 export const useRoomDetail = (props) => {
   const { proxy } = getCurrentInstance();
-  // config by base
-  const dispatchList = ["setAllRooms"];
+
+  /**
+   * @override
+   * @author nvthinh 17.9.2023
+   */
+  const initConfig = () => {
+    const me = proxy;
+    // init
+    me.key = "room_id";
+    me.name = "room_name";
+    me.controllerName = "Rooms";
+    me.itemsName = "allRooms";
+    me.dispatchList = ["setAllRooms"];
+  };
+
   // get data from store
   const roomCategories = computed(() => {
     return proxy.store.state.allRoomCategories;
   });
-  // key
-  const key = "room_id";
-  const name = "room_name";
-  // mode
-  const mode = props.popupMode;
 
   const validateRequire = () => {
     const me = proxy;
@@ -28,8 +34,8 @@ export const useRoomDetail = (props) => {
   onMounted(() => {
     const me = proxy;
     // update model
-    me.model[key] = props.entity[key];
-    me.model[name] = props.entity[name];
+    me.model[me.key] = props.entity[me.key];
+    me.model[me.name] = props.entity[me.name];
     // init room category for model
     me.model.room_category_id =
       me.store.state.allRoomCategories[0]?.room_category_id;
@@ -37,14 +43,6 @@ export const useRoomDetail = (props) => {
       me.store.state.allRoomCategories[0]?.room_category_name;
     // update trạng thái
     me.model.state = true;
-  });
-
-  const popupTitle = computed(() => {
-    if (proxy.$props.mode == Enum.Mode.Update) {
-      return "Sửa " + proxy.$props.title;
-    } else {
-      return "Thêm " + proxy.$props.title;
-    }
   });
 
   /**
@@ -60,12 +58,9 @@ export const useRoomDetail = (props) => {
   };
 
   return {
-    mode,
-    key,
-    dispatchList,
-    popupTitle,
     roomCategories,
     updateCombobox,
     validateRequire,
+    initConfig,
   };
 };

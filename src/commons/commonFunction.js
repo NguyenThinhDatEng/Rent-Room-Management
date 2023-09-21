@@ -117,7 +117,7 @@ export default {
    * @returns {String}
    * @author nvthinh 6.9.2023
    */
-  removeSpecialCharacters(str) {
+  removeSpecialCharacters(str = "") {
     return str.replace(/[^0-9]/g, "");
   },
 };

@@ -50,16 +50,6 @@
           class="mr-2"
         ></Input>
         <Input
-          label="Ngày thuê"
-          field="room_rental_date"
-          :hasLabel="true"
-          mask="date"
-          placeholder="01/01/2023"
-          v-model="model.room_rental_date"
-        ></Input>
-      </div>
-      <div class="row">
-        <Input
           label="Tiền cọc"
           placeholder="100000"
           field="deposit"
@@ -67,6 +57,25 @@
           mask="decimal"
           :max-length="22"
           v-model="model.deposit"
+        ></Input>
+      </div>
+      <div class="row">
+        <Input
+          class="mr-2"
+          label="Ngày thuê"
+          field="room_rental_date"
+          :hasLabel="true"
+          mask="date"
+          placeholder="01/01/2023"
+          v-model="model.room_rental_date"
+        ></Input>
+        <Input
+          label="Ngày trả"
+          field="check_out_date"
+          :hasLabel="true"
+          mask="date"
+          placeholder="01/02/2023"
+          v-model="model.check_out_date"
         ></Input>
       </div>
       <!-- Table -->

@@ -22,7 +22,7 @@
       title="người thuê"
       :width="500"
       :entity="detailData"
-      :popupMode="popupMode"
+      :mode="popupMode"
       @close="closePopup"
     />
   </div>
