@@ -175,3 +175,12 @@
 .combobox__data--up .data {
     justify-content: center;
 }
+
+.input--disabled {
+    pointer-events: none;
+    background-color: #fafafa;
+}
+
+.input--disabled:hover {
+    border-color: #afafaf;
+}

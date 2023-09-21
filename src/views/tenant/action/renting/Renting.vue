@@ -2,14 +2,6 @@
   <div class="renting flex">
     <div class="room-category_feature">
       <div class="content_name">Quản lý thuê phòng</div>
-      <button-icon
-        button-type="button--add"
-        button-name="asset-add"
-        buttonContent="Thêm mới"
-        :hasIcon="false"
-        :title="Resource.Title.add"
-        @click="add"
-      ></button-icon>
     </div>
     <!-- Search -->
     <div class="search mb-2 pl-1">
@@ -21,6 +13,15 @@
         v-model="model.keyWord"
         @keyup.enter="refresh({ keyWord: model.keyWord })"
       ></Input>
+      <button-icon
+        class="mr-1"
+        button-type="button--add"
+        button-name="asset-add"
+        buttonContent="Thêm mới"
+        :hasIcon="false"
+        :title="Resource.Title.add"
+        @click="add"
+      ></button-icon>
     </div>
     <!-- Table -->
     <table-vue
@@ -34,7 +35,7 @@
     <RentingDetail
       v-if="isShowPopup"
       title="thuê phòng"
-      :width="400"
+      :width="800"
       :entity="detailData"
       :mode="popupMode"
       @close="closePopup"

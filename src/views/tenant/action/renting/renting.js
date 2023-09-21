@@ -12,13 +12,11 @@ export const useRenting = () => {
   const cols = {
     numerical_order: { ENG: "numerical_order", VN: "STT" },
     room_name: { ENG: "room_name", VN: "Tên phòng" },
-    price: { ENG: "price", VN: "Giá phòng" },
-    user_name: { ENG: "user_name", VN: "Người thuê" },
-    phone_number: { ENG: "renter_name", VN: "Số điện thoại" },
+    quantity: { ENG: "quantity", VN: "Số khách hàng" },
     room_rental_date: { ENG: "room_rental_date", VN: "Ngày thuê" },
+    price: { ENG: "price", VN: "Giá phòng" },
     deposit: { ENG: "deposit", VN: "Tiền cọc" },
     feature: { ENG: "feature", VN: "Tính năng" },
-    // room_category_name: { ENG: "room_category_name", VN: "Loại phòng" },
   };
   const tds = [
     {
@@ -36,41 +34,32 @@ export const useRenting = () => {
       align: "left",
     },
     {
-      col: "price",
+      col: "quantity",
       type: Enum.TableData.type.number,
       width: "120px",
       align: "right",
-    },
-    {
-      col: "user_name",
-      type: Enum.TableData.type.text,
-      minWidth: "150px",
-      maxWidth: "180px",
-      align: "left",
-    },
-    {
-      col: "phone_number",
-      type: Enum.TableData.type.text,
-      minWidth: "90px",
-      maxWidth: "180px",
-      align: "left",
     },
     {
       col: "room_rental_date",
       type: Enum.TableData.type.date,
-      width: "120px",
+      width: "200px",
       align: "center",
+    },
+    {
+      col: "price",
+      type: Enum.TableData.type.number,
+      width: "150px",
+      align: "right",
     },
     {
       col: "deposit",
       type: Enum.TableData.type.number,
-      width: "100px",
+      width: "150px",
       align: "right",
     },
     {
       col: TableResource.TableRow.FixedAsset.feature.ENG,
-      minWidth: "120px",
-      width: "120px",
+      width: "180px",
     },
   ];
   //#endregion

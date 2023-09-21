@@ -22,7 +22,6 @@ export const useUserDetail = () => {
     // init
     me.key = "user_id";
     me.name = "user_name";
-    me.itemsName = "allUsers";
     me.controllerName = "Users";
     me.dispatchList = ["setAllUsers"];
     me.defaultData = {

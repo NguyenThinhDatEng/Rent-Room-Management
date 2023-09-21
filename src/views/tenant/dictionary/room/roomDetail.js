@@ -5,7 +5,6 @@ import Enum from "@/commons/enum";
 export const useRoomDetail = (props) => {
   const { proxy } = getCurrentInstance();
   // config by base
-  const itemsName = "allRooms";
   const dispatchList = ["setAllRooms"];
   // get data from store
   const roomCategories = computed(() => {
@@ -63,7 +62,6 @@ export const useRoomDetail = (props) => {
   return {
     mode,
     key,
-    itemsName,
     dispatchList,
     popupTitle,
     roomCategories,

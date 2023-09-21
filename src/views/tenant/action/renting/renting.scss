@@ -15,6 +15,12 @@
   }
 
   .search {
-    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+
+    .input__wrapper {
+      width: 250px;
+    }
   }
 }

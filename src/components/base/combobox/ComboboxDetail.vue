@@ -13,6 +13,8 @@
         v-model="val"
         :placeholder="placeholder"
         :maxlength="maxLength"
+        :disabled="isDisabled"
+        :class="[{ 'input--disabled': isDisabled }]"
         @click="toggle"
         @keydown.tab="close"
         @keydown.enter="toggle"
@@ -127,6 +129,10 @@ export default {
       type: String,
       default: "",
     },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["update-combobox"],
 
@@ -149,10 +155,13 @@ export default {
       })
     );
 
-    const entity = me.comboboxData.filter(
+    const entity = me.comboboxData.find(
       (item) => item[me.valueField] == me.value
     );
-    me.val = entity[me.displayField] || "";
+    // Cập nhật giá trị hiển thị
+    if (entity) {
+      me.val = entity[me.displayField] || "";
+    }
   },
 
   watch: {
@@ -198,25 +207,13 @@ export default {
       try {
         // get the ID of object
         const id = this.data[index][this.fields.id];
-        // dữ liệu phát lên lớp cha
-        let comboData = [];
         // Lọc ra obj được chọn
         for (let obj of this.comboboxData) {
           if (id == obj[this.fields.id]) {
             // Cập nhật giá trị hiển thị cho input
             this.val = obj[me.displayField];
-            // Cập nhật dữ liệu trong data
-            comboData.push({
-              field: this.fields.id,
-              value: obj[this.fields.id],
-            });
-            // name
-            comboData.push({
-              field: this.fields.name,
-              value: obj[this.fields.name],
-            });
             // Phát dữ liệu đến lớp cha
-            this.$emit("update-combobox", comboData, this.fields.code);
+            this.$emit("update-combobox", obj);
             // Thay đổi trạng thái
             obj.isActive = true;
           } else obj.isActive = false;

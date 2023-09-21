@@ -16,21 +16,18 @@ export default {
     return {
       key: "",
       name: "",
-      mode: 0,
       model: {},
       defaultData: {},
       isShowPopup: false,
       dispatchList: [],
       itemsName: "",
       controllerName: "",
+      items: [], // Dữ liệu của bảng
     };
   },
   computed: {
     store() {
       return useStore();
-    },
-    items() {
-      return this.store.state[this.itemsName];
     },
     api() {
       switch (this.controllerName) {
@@ -55,21 +52,24 @@ export default {
   },
   emits: ["close"],
   created() {
-    this.initConfig();
+    const me = this;
+
+    me.initConfig();
+
+    if (me.mode == Enum.Mode.Add) {
+      me.model = me.defaultData;
+    } else {
+      me.model = me.entity;
+    }
 
     this.dispatchList.forEach((action) => {
       this.store.dispatch(action);
     });
+    me.beforeBinding();
   },
   mounted() {
     const me = this;
     window._detail = me;
-
-    if (me.$props.mode == Enum.Mode.Add) {
-      me.model = me.defaultData;
-    } else {
-      me.model = me.$props.entity;
-    }
   },
 
   unmounted() {},
@@ -122,6 +122,8 @@ export default {
     },
 
     beforeSave() {},
+
+    beforeBinding() {},
 
     /**
      * @description Đóng popup

@@ -2,6 +2,7 @@ import httpClient from "./httpClient";
 
 export default class BaseAPI {
   endPoint = "";
+  httpClient = httpClient;
 
   async getAsync(config) {
     const params = {

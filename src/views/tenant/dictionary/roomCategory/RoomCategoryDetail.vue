@@ -11,7 +11,7 @@
           v-model="model.room_category_name"
         ></Input>
       </div>
-      <div class="room-category_price">
+      <div class="room-category_price mt-2">
         <Input
           label="Đơn giá"
           placeholder="100000"

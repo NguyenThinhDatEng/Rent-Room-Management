@@ -5,8 +5,8 @@ import Resource from "@/commons/resource";
 
 export const useRoom = () => {
   // config to base
-  const itemsName = "allRooms";
   const dispatchList = ["setAllRooms", "setAllRoomCategories"];
+  const itemsName = "allRooms";
   // key
   const key = "room_id";
 
@@ -54,7 +54,6 @@ export const useRoom = () => {
   ];
 
   return {
-    itemsName,
     cols,
     TableResource,
     tds,
@@ -62,5 +61,6 @@ export const useRoom = () => {
     close,
     dispatchList,
     key,
+    itemsName,
   };
 };

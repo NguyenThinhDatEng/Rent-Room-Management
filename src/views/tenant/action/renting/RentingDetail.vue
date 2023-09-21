@@ -2,29 +2,31 @@
   <Popup
     class="renting-detail"
     :title="popupTitle"
-    :width="400"
     @close-popup="close"
     @on-save="save"
   >
-    <div class="popup__body__wrapper">
-      <div class="row flex-column">
+    <div
+      class="popup__body__wrapper flex-column"
+      :style="{ height: mode == Enum.Mode.Update ? '500px' : 'unset' }"
+    >
+      <div class="row">
         <ComboboxDetail
+          class="mr-2"
           label="Phòng"
           field="room"
           displayField="room_name"
           valueField="room_id"
           :max-length="255"
-          :combobox-data="store.state.allRooms"
+          :combobox-data="roomItems"
           :value="model.room_id"
           :has-label="true"
           :is-required="true"
           :isShowComboboxDataTitle="false"
-          @update-combobox="updateCombobox"
+          :isDisabled="mode == Enum.Mode.Update"
+          @update-combobox="selectRoom"
         ></ComboboxDetail>
-      </div>
-      <div class="row user">
         <ComboboxDetail
-          label="Người thuê"
+          :label="userLabel"
           field="user"
           displayField="user_name"
           valueField="user_id"
@@ -34,11 +36,8 @@
           :has-label="true"
           :is-required="true"
           :isShowComboboxDataTitle="false"
-          @update-combobox="updateCombobox"
+          @update-combobox="selectUser"
         ></ComboboxDetail>
-        <!-- <button class="add-user" @click="showUserDetail">
-          <div class="icon icon--plus-black w-10 h-10 center"></div>
-        </button> -->
       </div>
       <div class="row">
         <Input
@@ -70,6 +69,16 @@
           v-model="model.deposit"
         ></Input>
       </div>
+      <!-- Table -->
+      <table-vue
+        v-if="mode === Enum.Mode.Update"
+        :data="items"
+        :cols="cols"
+        :tds="tds"
+        class="flex"
+        :features="['delete']"
+        @clickGridAction="clickGridAction"
+      ></table-vue>
     </div>
   </Popup>
 </template>
@@ -79,6 +88,7 @@
 import Popup from "@/components/base/popup/VPopup.vue";
 import Input from "@/components/base/input/Input.vue";
 import ComboboxDetail from "@/components/base/combobox/ComboboxDetail.vue";
+import TableVue from "@/components/base/table/Table.vue";
 // Resources
 import { useRentingDetail } from "./rentingDetail.js";
 // base
@@ -91,6 +101,7 @@ export default {
     Popup,
     Input,
     ComboboxDetail,
+    TableVue,
   },
   props: {
     title: {
@@ -117,8 +128,8 @@ export default {
       type: Number,
     },
   },
-  setup(props) {
-    const rentingDetail = useRentingDetail(props);
+  setup() {
+    const rentingDetail = useRentingDetail();
     return rentingDetail;
   },
 };
